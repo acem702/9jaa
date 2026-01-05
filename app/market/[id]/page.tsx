@@ -122,7 +122,7 @@ export default function MarketDetail() {
                     <div className="w-3 h-3 rounded-full bg-green-500"></div>
                   </div>
                   <p className="text-3xl font-black text-green-600">{yesPrice}¢</p>
-                  {stats?.price_change_24h !== null && (
+                  {stats && typeof stats.price_change_24h === 'number' && (
                     <p className={`text-xs font-medium mt-1 ${stats.price_change_24h >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                       {stats.price_change_24h >= 0 ? '+' : ''}{stats.price_change_24h.toFixed(1)}% (24h)
                     </p>
@@ -135,7 +135,7 @@ export default function MarketDetail() {
                     <div className="w-3 h-3 rounded-full bg-red-500"></div>
                   </div>
                   <p className="text-3xl font-black text-red-600">{noPrice}¢</p>
-                  {stats?.price_change_24h !== null && (
+                  {stats && typeof stats.price_change_24h === 'number' && (
                     <p className={`text-xs font-medium mt-1 ${stats.price_change_24h >= 0 ? 'text-red-600' : 'text-green-600'}`}>
                       {stats.price_change_24h >= 0 ? '-' : '+'}{Math.abs(stats.price_change_24h).toFixed(1)}% (24h)
                     </p>

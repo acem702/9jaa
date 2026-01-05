@@ -48,10 +48,10 @@ class ApiService {
     endpoint: string,
     options: RequestInit = {}
   ): Promise<T> {
-    const headers: HeadersInit = {
+    const headers = {
       'Content-Type': 'application/json',
       ...options.headers,
-    };
+    } as Record<string, string>;
 
     const token = this.getToken();
     if (token) {
