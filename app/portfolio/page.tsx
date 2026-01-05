@@ -197,7 +197,7 @@ function PositionCard({ position }: { position: Position }) {
               {position.question.title}
             </h3>
             <p className="text-sm text-gray-600">
-              {position.shares.toFixed(2)} shares
+              {Number(position.shares).toFixed(2)} shares
             </p>
           </div>
 
@@ -206,14 +206,14 @@ function PositionCard({ position }: { position: Position }) {
             <div className="flex-1 md:flex-none">
               <p className="text-xs text-gray-500 mb-1">Cost</p>
               <p className="text-lg font-bold text-gray-900">
-                {position.cost.toFixed(2)}
+                {Number(position.cost).toFixed(2)}
               </p>
             </div>
 
             <div className="flex-1 md:flex-none">
               <p className="text-xs text-gray-500 mb-1">Value</p>
               <p className="text-lg font-bold text-gray-900">
-                {position.current_value.toFixed(2)}
+                {Number(position.current_value).toFixed(2)}
               </p>
             </div>
 
@@ -221,10 +221,10 @@ function PositionCard({ position }: { position: Position }) {
               <p className="text-xs text-gray-500 mb-1">P&L</p>
               <div>
                 <p className={`text-lg font-bold ${isWinning ? 'text-green-600' : 'text-red-600'}`}>
-                  {isWinning ? '+' : ''}{position.profit_loss.toFixed(2)}
+                  {isWinning ? '+' : ''}{Number(position.profit_loss).toFixed(2)}
                 </p>
                 <p className={`text-sm font-medium ${isWinning ? 'text-green-600' : 'text-red-600'}`}>
-                  {isWinning ? '+' : ''}{position.profit_loss_pct.toFixed(1)}%
+                  {isWinning ? '+' : ''}{Number(position.profit_loss_pct).toFixed(1)}%
                 </p>
               </div>
             </div>

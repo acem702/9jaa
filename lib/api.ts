@@ -172,6 +172,24 @@ class ApiService {
   async getSentiment(questionId: string) {
     return this.request<{ sentiment: Sentiment }>(`/charts/questions/${questionId}/sentiment`);
   }
+
+  async getLeaderboard(type: string = 'volume', limit: number = 10) {
+    return this.request<{ 
+      type: string; 
+      leaderboard: Array<{
+        id: number;
+        name: string;
+        email?: string;
+        total_volume?: number;
+        trade_count?: number;
+        total_invested?: number;
+        markets_traded?: number;
+        correct_predictions?: number;
+        total_predictions?: number;
+        accuracy?: number;
+      }>
+    }>(`/charts/leaderboard?type=${type}&limit=${limit}`);
+  }
 }
 
 export const api = new ApiService();
