@@ -34,35 +34,27 @@ export default function Home() {
   );
 
   return (
-    <div className="min-h-screen bg-[#0f172a] text-white">
+    <div className="min-h-screen bg-slate-50 text-slate-900">
       <Head>
-        <title>Polymarket Clone</title>
+        <title>9ja Markets</title>
       </Head>
 
       <Navbar />
 
-      <main className="max-w-2xl mx-auto px-4 py-8 pb-24">
-        {/* Search & Categories */}
-        <div className="mb-6 space-y-4">
-          <div className="relative">
+      <main className="max-w-2xl mx-auto px-4 py-8">
+        {/* Search */}
+        <div className="mb-6">
+          <div className="relative group">
             <input
               type="text"
-              placeholder="Search"
+              placeholder="Search markets..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full bg-[#1e293b] border border-slate-700 rounded-xl py-3 px-12 text-slate-300 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full bg-white border border-gray-200 rounded-2xl py-4 px-12 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-sm group-hover:shadow-md"
             />
-            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 group-focus-within:text-blue-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-          </div>
-
-          <div className="flex items-center space-x-4 overflow-x-auto pb-2 scrollbar-hide">
-            <button className="bg-blue-600/20 text-blue-400 px-4 py-1.5 rounded-lg font-medium whitespace-nowrap">All</button>
-            <button className="text-slate-400 px-4 py-1.5 rounded-lg font-medium whitespace-nowrap hover:text-white">Trump</button>
-            <button className="text-slate-400 px-4 py-1.5 rounded-lg font-medium whitespace-nowrap hover:text-white">Venezuela</button>
-            <button className="text-slate-400 px-4 py-1.5 rounded-lg font-medium whitespace-nowrap hover:text-white">Iran</button>
-            <button className="text-slate-400 px-4 py-1.5 rounded-lg font-medium whitespace-nowrap hover:text-white">Greenland</button>
           </div>
         </div>
 
@@ -70,10 +62,10 @@ export default function Home() {
         <div className="space-y-4">
           {loading ? (
             <div className="flex justify-center py-20">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           ) : filteredQuestions.length === 0 ? (
-            <div className="text-center py-20 text-slate-500">No markets found</div>
+            <div className="text-center py-20 text-gray-500 bg-white rounded-3xl border border-gray-100 shadow-sm">No markets found</div>
           ) : (
             filteredQuestions.map((question) => (
               <PolymarketCard key={question.id} question={question} />
@@ -81,26 +73,6 @@ export default function Home() {
           )}
         </div>
       </main>
-
-      {/* Bottom Nav Mobile */}
-      <div className="fixed bottom-0 left-0 right-0 bg-[#0f172a]/80 backdrop-blur-md border-t border-slate-800 md:hidden flex justify-around py-3 px-4 z-50">
-        <button className="flex flex-col items-center text-white">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span className="text-[10px] mt-1">Home</span>
-        </button>
-        <button className="flex flex-col items-center text-slate-400">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-          <span className="text-[10px] mt-1">Search</span>
-        </button>
-        <button className="flex flex-col items-center text-slate-400">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-          <span className="text-[10px] mt-1">Breaking</span>
-        </button>
-        <button className="flex flex-col items-center text-slate-400">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16"/></svg>
-          <span className="text-[10px] mt-1">More</span>
-        </button>
-      </div>
     </div>
   );
 }
@@ -110,39 +82,50 @@ function PolymarketCard({ question }: { question: Question }) {
   
   return (
     <Link href={`/market/${question.id}`}>
-      <div className="bg-[#1e293b] border border-slate-800 rounded-2xl p-4 hover:border-slate-700 transition-colors group">
-        <div className="flex gap-4 mb-4">
-          <div className="w-12 h-12 bg-slate-700 rounded-lg overflow-hidden flex-shrink-0">
-            <div className="w-full h-full bg-gradient-to-br from-slate-600 to-slate-800 flex items-center justify-center text-xl">
-              {question.title.toLowerCase().includes('iran') ? '🇮🇷' : 
-               question.title.toLowerCase().includes('venezuela') ? '🇻🇪' : '🗳️'}
-            </div>
+      <div className="bg-white border border-gray-100 rounded-3xl p-5 hover:border-blue-200 transition-all shadow-sm hover:shadow-xl group">
+        <div className="flex gap-4 mb-5">
+          <div className="w-14 h-14 bg-slate-100 rounded-2xl overflow-hidden flex-shrink-0 flex items-center justify-center text-2xl shadow-inner">
+            {question.title.toLowerCase().includes('election') ? '🗳️' : 
+             question.title.toLowerCase().includes('iran') ? '🇮🇷' : 
+             question.title.toLowerCase().includes('trump') ? '🇺🇸' : '📈'}
           </div>
-          <div className="flex-1">
-            <div className="flex justify-between items-start">
-              <h3 className="text-[15px] font-bold leading-tight pr-4 group-hover:text-blue-400 transition-colors">
+          <div className="flex-1 min-w-0">
+            <div className="flex justify-between items-start gap-4">
+              <h3 className="text-[17px] font-bold text-gray-900 leading-tight group-hover:text-blue-600 transition-colors line-clamp-2">
                 {question.title}
               </h3>
-              <div className="flex flex-col items-center border border-slate-700 rounded-lg p-2 min-w-[64px] bg-[#0f172a]">
-                <span className="text-blue-400 font-bold text-lg">{yesPrice}%</span>
-                <span className="text-[10px] text-slate-400 uppercase font-bold">chance</span>
+              <div className="flex flex-col items-center border border-blue-50 rounded-xl p-2 min-w-[70px] bg-blue-50/50">
+                <span className="text-blue-600 font-black text-xl leading-none">{yesPrice}%</span>
+                <span className="text-[10px] text-blue-400 uppercase font-black tracking-wider mt-1">chance</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 mb-4">
-          <button className="bg-[#10b981]/10 text-[#10b981] font-bold py-2.5 rounded-xl border border-[#10b981]/20 hover:bg-[#10b981]/20 transition-all active:scale-[0.98]">Yes</button>
-          <button className="bg-[#ef4444]/10 text-[#ef4444] font-bold py-2.5 rounded-xl border border-[#ef4444]/20 hover:bg-[#ef4444]/20 transition-all active:scale-[0.98]">No</button>
+        <div className="grid grid-cols-2 gap-4 mb-5">
+          <div className="relative group/btn">
+            <button className="w-full bg-emerald-50 text-emerald-600 font-black py-3 rounded-2xl border border-emerald-100 hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all text-sm uppercase tracking-wide">
+              Yes {yesPrice}¢
+            </button>
+          </div>
+          <div className="relative group/btn">
+            <button className="w-full bg-rose-50 text-rose-600 font-black py-3 rounded-2xl border border-rose-100 hover:bg-rose-500 hover:text-white hover:border-rose-500 transition-all text-sm uppercase tracking-wide">
+              No {100 - yesPrice}¢
+            </button>
+          </div>
         </div>
 
-        <div className="flex items-center justify-between pt-1 text-[11px] text-slate-400 font-bold">
-          <div className="flex items-center gap-2">
-            <span>$1M Vol.</span>
-            <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"/></svg>
+        <div className="flex items-center justify-between pt-4 border-t border-gray-50 text-[12px] text-gray-400 font-bold">
+          <div className="flex items-center gap-3">
+            <span className="flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+              $1M Vol.
+            </span>
           </div>
-          <button className="hover:text-white transition-colors">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+          <button className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400 hover:text-blue-500">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+            </svg>
           </button>
         </div>
       </div>
