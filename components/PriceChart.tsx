@@ -68,16 +68,16 @@ export default function PriceChart({ questionId }: PriceChartProps) {
       layout={{
         autosize: true,
         margin: { l: 50, r: 20, t: 20, b: 50 },
-        xaxis: { gridcolor: '#f1f5f9' },
+        xaxis: { gridcolor: '#1e293b' },
         yaxis: { 
-          gridcolor: '#f1f5f9',
+          gridcolor: '#1e293b',
           range: [0, 100],
-          ticksuffix: '¢',
+          ticksuffix: '%',
         },
         legend: { orientation: 'h', y: -0.15 },
         hovermode: 'x unified',
-        paper_bgcolor: 'white',
-        plot_bgcolor: 'white',
+        paper_bgcolor: 'transparent',
+        plot_bgcolor: 'transparent',
       }}
       config={{ displayModeBar: false, responsive: true }}
       style={{ width: '100%', height: '100%' }}
