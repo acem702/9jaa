@@ -3,10 +3,10 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Navbar from '@/components/Navbar';
-import { ProtectedRoute } from '@/components/ProtectedRoute';
 import { api } from '@/lib/api';
 import { Trade } from '@/types';
+import { ProtectedRoute } from '@/components/ProtectedRoute';
+import Navbar from '@/components/Navbar';
 
 function ActivityPage() {
   const [trades, setTrades] = useState<Trade[]>([]);
