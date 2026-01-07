@@ -72,14 +72,14 @@ function ActivityPage() {
                   <div className="flex justify-between items-end">
                     <div>
                       <p className="text-sm font-black text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors">
-                        {position.shares.toFixed(2)} Shares
+                        {Number(position.shares).toFixed(2)} Shares
                       </p>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
-                        P&L: {position.profit_loss.toFixed(2)} CR
+                        P&L: {Number(position.profit_loss).toFixed(2)} CR
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-black text-slate-900">{position.current_value.toFixed(2)} CR</p>
+                      <p className="text-sm font-black text-slate-900">{Number(position.current_value).toFixed(2)} CR</p>
                       <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">CURRENT VALUE</p>
                     </div>
                   </div>

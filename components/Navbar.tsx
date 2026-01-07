@@ -26,12 +26,6 @@ export default function Navbar() {
               <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-lg shadow-blue-500/30">
                 <span className="text-white font-black text-xl">9</span>
               </div>
-              <span className="text-xl font-black">
-                <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
-                  9ja
-                </span>
-                <span className="text-gray-900">Markets</span>
-              </span>
             </Link>
           </div>
             
@@ -86,7 +80,7 @@ export default function Navbar() {
                 <Link href="/login" className="px-4 py-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
                   Login
                 </Link>
-                <Link href="/register" className="px-6 py-2.5 bg-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all">
+                <Link href="/register" className="px-4 py-2 bg-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all">
                   Sign Up
                 </Link>
               </div>
