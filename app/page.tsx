@@ -143,15 +143,24 @@ function PolymarketCard({ question }: { question: Question }) {
     return `$${vol}`;
   };
 
+  const getEmoji = (title: string) => {
+    const t = title.toLowerCase();
+    if (t.includes('election') || t.includes('vote') || t.includes('trump') || t.includes('biden') || t.includes('kamala')) return '🗳️';
+    if (t.includes('iran') || t.includes('israel') || t.includes('war') || t.includes('conflict')) return '🌍';
+    if (t.includes('crypto') || t.includes('bitcoin') || t.includes('eth')) return '🪙';
+    if (t.includes('stock') || t.includes('market') || t.includes('fed') || t.includes('rate')) return '💹';
+    if (t.includes('tech') || t.includes('ai') || t.includes('apple') || t.includes('google')) return '🤖';
+    if (t.includes('sport') || t.includes('football') || t.includes('nba') || t.includes('soccer')) return '⚽';
+    return '📝'; // Default to a more neutral memo emoji
+  };
+
   return (
     <div className="py-6 transition-colors group">
       <Link href={`/market/${question.id}`}>
         <div className="bg-white rounded-2xl p-4 border border-slate-100 hover:bg-slate-50 hover:border-slate-200 transition-all duration-300 shadow-sm">
           <div className="flex gap-4 mb-5">
             <div className="w-14 h-14 bg-slate-50 rounded-xl flex-shrink-0 flex items-center justify-center text-3xl overflow-hidden shadow-inner border border-slate-100">
-              {question.title.toLowerCase().includes('election') ? '🗳️' : 
-               question.title.toLowerCase().includes('iran') ? '🇮🇷' : 
-               question.title.toLowerCase().includes('trump') ? '🇺🇸' : '📈'}
+              {getEmoji(question.title)}
             </div>
             <div className="flex-1 min-w-0 flex justify-between items-start gap-4">
               <h3 className="text-[17px] font-bold text-slate-900 leading-tight line-clamp-2 pt-0.5">
