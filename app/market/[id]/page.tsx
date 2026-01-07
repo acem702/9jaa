@@ -72,7 +72,7 @@ export default function MarketDetail() {
   const noPrice = Math.round(question.market.no_price * 100);
 
   return (
-    <div className="min-h-screen bg-[#f1f5f9]">
+    <div className="min-h-screen bg-background">
       <Head>
         <title>{question.title} - 9ja Markets</title>
       </Head>
@@ -80,88 +80,69 @@ export default function MarketDetail() {
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 py-6 pb-32">
-        {/* Back Link */}
-        <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 mb-6 transition-colors font-bold text-sm">
+        <Link href="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-6 transition-colors font-bold text-sm">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/></svg>
           Back to Markets
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Market Header */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 md:p-8">
+            <div className="bg-card rounded-lg border border-border shadow-sm p-6 md:p-8">
               <div className="flex items-center gap-2 mb-4">
-                <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
-                  question.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-slate-50 text-slate-700 border-slate-200'
+                <span className={`px-2 py-0.5 rounded text-[10px] font-bold border uppercase tracking-wider ${
+                  question.status === 'active' ? 'bg-emerald-500/10 text-emerald-700 border-emerald-500/20' : 'bg-slate-100 text-slate-700 border-slate-200'
                 }`}>
                   {question.status}
                 </span>
                 {question.resolution !== null && (
-                  <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
-                    question.resolution ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-rose-50 text-rose-700 border-rose-100'
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold border uppercase tracking-wider ${
+                    question.resolution ? 'bg-blue-500/10 text-blue-700 border-blue-500/20' : 'bg-rose-500/10 text-rose-700 border-rose-500/20'
                   }`}>
-                    {question.resolution ? 'YES WON' : 'NO WON'}
+                    {question.resolution ? 'Resolves YES' : 'Resolves NO'}
                   </span>
                 )}
               </div>
               
-              <h1 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight mb-8">
+              <h1 className="text-2xl md:text-3xl font-bold text-foreground leading-tight mb-8">
                 {question.title}
               </h1>
 
               <div className="grid grid-cols-2 gap-4">
-                <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-100 flex flex-col items-center justify-center">
-                  <span className="text-[10px] font-black text-emerald-700 uppercase tracking-widest mb-1">YES</span>
-                  <p className="text-4xl font-black text-emerald-600">{yesPrice}¢</p>
+                <div className="bg-emerald-500/10 rounded-lg p-6 border border-emerald-500/20 flex flex-col items-center justify-center">
+                  <span className="text-xs font-bold text-emerald-700 uppercase tracking-widest mb-1">YES</span>
+                  <p className="text-4xl font-bold text-emerald-600">{yesPrice}¢</p>
                 </div>
-                <div className="bg-rose-50 rounded-2xl p-6 border border-rose-100 flex flex-col items-center justify-center">
-                  <span className="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-1">NO</span>
-                  <p className="text-4xl font-black text-rose-600">{noPrice}¢</p>
+                <div className="bg-rose-500/10 rounded-lg p-6 border border-rose-500/20 flex flex-col items-center justify-center">
+                  <span className="text-xs font-bold text-rose-700 uppercase tracking-widest mb-1">NO</span>
+                  <p className="text-4xl font-bold text-rose-600">{noPrice}¢</p>
                 </div>
               </div>
             </div>
 
-            {/* Price Chart */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 overflow-hidden">
-              <h3 className="text-lg font-black text-slate-900 mb-6 uppercase tracking-tight">Price History</h3>
+            <div className="bg-card rounded-lg border border-border shadow-sm p-6 overflow-hidden">
+              <h3 className="text-base font-bold text-foreground mb-4">Price History</h3>
               <div className="h-[350px]">
                 <PriceChart questionId={id as string} />
               </div>
             </div>
 
-            {/* About Section */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
-              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-tight">About</h3>
-              <p className="text-slate-600 leading-relaxed text-sm">
+            <div className="bg-card rounded-lg border border-border shadow-sm p-6">
+              <h3 className="text-base font-bold text-foreground mb-4">About this market</h3>
+              <p className="text-muted-foreground leading-relaxed text-sm">
                 {question.description}
               </p>
             </div>
 
-            {/* Stats Grid */}
             {stats && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Volume</p>
-                  <p className="text-lg font-black text-slate-900">{stats.total_volume.toLocaleString()}</p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Trades</p>
-                  <p className="text-lg font-black text-slate-900">{stats.total_trades}</p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Holders</p>
-                  <p className="text-lg font-black text-slate-900">{stats.unique_traders}</p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Liquidity</p>
-                  <p className="text-lg font-black text-slate-900">{Math.round(stats.liquidity.total).toLocaleString()}</p>
-                </div>
+                <StatItem label="Volume" value={stats.total_volume.toLocaleString()} />
+                <StatItem label="Trades" value={stats.total_trades.toLocaleString()} />
+                <StatItem label="Traders" value={stats.unique_traders.toLocaleString()} />
+                <StatItem label="Liquidity" value={Math.round(stats.liquidity.total).toLocaleString()} />
               </div>
             )}
           </div>
 
-          {/* Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
               <TradePanel question={question} onTradeComplete={fetchMarketData} />
@@ -169,26 +150,15 @@ export default function MarketDetail() {
           </div>
         </div>
       </main>
+    </div>
+  );
+}
 
-      {/* Mobile Bottom Nav */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200 md:hidden flex justify-around py-4 px-4 z-50">
-        <Link href="/" className="flex flex-col items-center gap-1.5 transition-all active:scale-95">
-          <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Home</span>
-        </Link>
-        <Link href="/portfolio" className="flex flex-col items-center gap-1.5 text-slate-400 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-          <span className="text-[10px] font-black uppercase tracking-widest">Portfolio</span>
-        </Link>
-        <Link href="/leaderboard" className="flex flex-col items-center gap-1.5 text-slate-400 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-          <span className="text-[10px] font-black uppercase tracking-widest">Ranks</span>
-        </Link>
-        <Link href="/activity" className="flex flex-col items-center gap-1.5 text-slate-400 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span className="text-[10px] font-black uppercase tracking-widest">Activity</span>
-        </Link>
-      </div>
+function StatItem({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="bg-card rounded-lg border border-border p-4 text-center">
+      <p className="text-xs text-muted-foreground font-semibold uppercase tracking-wider mb-1">{label}</p>
+      <p className="text-lg font-bold text-foreground">{value}</p>
     </div>
   );
 }
