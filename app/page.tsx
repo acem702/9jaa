@@ -46,7 +46,7 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#f1f5f9] text-slate-900">
+    <div className="min-h-screen bg-background text-foreground">
       <Head>
         <title>9ja Markets | Prediction Platform</title>
       </Head>
@@ -106,26 +106,6 @@ export default function Home() {
           )}
         </div>
       </main>
-
-      {/* Mobile Bottom Nav */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-lg border-t border-slate-200/80 md:hidden flex justify-around py-2 px-4 z-50">
-        <Link href="/" className="flex flex-col items-center gap-1 transition-all active:scale-95 text-slate-800">
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span className="text-[11px] font-bold">Home</span>
-        </Link>
-        <Link href="/portfolio" className="flex flex-col items-center gap-1 text-slate-500 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-          <span className="text-[11px] font-bold">Portfolio</span>
-        </Link>
-        <Link href="/leaderboard" className="flex flex-col items-center gap-1 text-slate-500 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-          <span className="text-[11px] font-bold">Ranks</span>
-        </Link>
-        <Link href="/activity" className="flex flex-col items-center gap-1 text-slate-500 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span className="text-[11px] font-bold">Activity</span>
-        </Link>
-      </div>
     </div>
   );
 }

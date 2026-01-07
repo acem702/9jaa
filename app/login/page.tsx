@@ -27,33 +27,32 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center px-4">
+    <div className="min-h-screen bg-background flex items-center justify-center px-4">
       <Head>
-        <title>Login - Political Sentiment</title>
+        <title>Login - 9ja Markets</title>
       </Head>
 
       <div className="max-w-md w-full">
-        {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/">
-            <span className="text-3xl font-black text-blue-600 cursor-pointer">
-              Political<span className="text-gray-900">Sentiment</span>
-            </span>
+          <Link href="/" className="flex items-center justify-center space-x-2 group">
+            <div className="w-12 h-12 bg-slate-900 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform">
+              <span className="text-white font-bold text-2xl">9</span>
+            </div>
+            <span className="text-3xl font-bold text-slate-800">9ja Markets</span>
           </Link>
-          <p className="text-gray-600 mt-2">Sign in to your account</p>
+          <p className="text-muted-foreground mt-2">Sign in to your account</p>
         </div>
 
-        {/* Login Card */}
-        <div className="bg-white rounded-2xl shadow-xl border-2 border-gray-100 p-8">
+        <div className="bg-card rounded-xl shadow-lg border border-border p-8">
           {error && (
-            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
-              <p className="text-sm text-red-700">{error}</p>
+            <div className="mb-6 p-3 bg-destructive/10 border border-destructive/20 rounded-lg">
+              <p className="text-sm text-destructive-foreground">{error}</p>
             </div>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Email Address
               </label>
               <input
@@ -61,13 +60,13 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all"
+                className="w-full px-4 py-3 bg-background border-2 border-border rounded-lg focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all"
                 placeholder="you@example.com"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-foreground mb-2">
                 Password
               </label>
               <input
@@ -75,7 +74,7 @@ export default function Login() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all"
+                className="w-full px-4 py-3 bg-background border-2 border-border rounded-lg focus:border-primary focus:ring-4 focus:ring-primary/10 outline-none transition-all"
                 placeholder="••••••••"
               />
             </div>
@@ -83,27 +82,24 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-lg transition-all shadow-lg shadow-blue-200 disabled:bg-gray-300 disabled:cursor-not-allowed"
+              className="w-full py-3 bg-primary hover:bg-primary/90 text-primary-foreground rounded-lg font-bold text-lg transition-all disabled:bg-muted disabled:cursor-not-allowed"
             >
               {loading ? 'Signing in...' : 'Sign In'}
             </button>
           </form>
 
           <div className="mt-6 text-center">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-muted-foreground">
               Don't have an account?{' '}
-              <Link href="/register">
-                <span className="text-blue-600 hover:text-blue-700 font-semibold cursor-pointer">
-                  Sign up
-                </span>
+              <Link href="/register" className="text-primary hover:underline font-semibold">
+                Sign up
               </Link>
             </p>
           </div>
         </div>
 
-        {/* Demo Account Info */}
-        <div className="mt-6 p-4 bg-white/50 backdrop-blur-sm rounded-xl border border-gray-200">
-          <p className="text-xs text-gray-600 text-center">
+        <div className="mt-6 p-4 bg-card/50 backdrop-blur-sm rounded-lg border border-border">
+          <p className="text-xs text-muted-foreground text-center">
             <strong>Demo Account:</strong> user1@example.com / password
           </p>
         </div>
