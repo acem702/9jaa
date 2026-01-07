@@ -4,12 +4,12 @@ import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { api } from '@/lib/api';
-import { Trade } from '@/types';
+import { Position } from '@/types';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import Navbar from '@/components/Navbar';
 
 function ActivityPage() {
-  const [trades, setTrades] = useState<Trade[]>([]);
+  const [positions, setPositions] = useState<Position[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,11 +19,11 @@ function ActivityPage() {
   const fetchActivity = async () => {
     try {
       setLoading(true);
-      const response = await api.getUserActivity();
-      setTrades(response.trades || []);
+      const response = await api.getPositions();
+      setPositions(response.positions || []);
     } catch (error) {
       console.error('Failed to fetch activity:', error);
-      setTrades([]);
+      setPositions([]);
     } finally {
       setLoading(false);
     }
@@ -49,38 +49,38 @@ function ActivityPage() {
           </div>
         ) : (
           <div className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden divide-y divide-slate-100">
-            {trades.length === 0 ? (
-              <div className="p-20 text-center text-slate-400 font-bold">No activity found</div>
+            {positions.length === 0 ? (
+              <div className="p-20 text-center text-slate-400 font-bold">No positions found</div>
             ) : (
-              trades.map((trade) => (
-                <div key={trade.id} className="p-5 hover:bg-slate-50 transition-colors group">
+              positions.map((position) => (
+                <div key={position.id} className="p-5 hover:bg-slate-50 transition-colors group">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center gap-2">
                       <span className={`px-2 py-0.5 rounded-lg text-[9px] font-black uppercase tracking-widest border ${
-                        trade.type === 'buy' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100'
+                        position.position === 'YES' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-100'
                       }`}>
-                        {trade.type}
+                        POS
                       </span>
-                      <span className={`text-xs font-black ${trade.position === 'YES' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                        {trade.position}
+                      <span className={`text-xs font-black ${position.position === 'YES' ? 'text-emerald-600' : 'text-rose-600'}`}>
+                        {position.position}
                       </span>
                     </div>
                     <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">
-                      {new Date(trade.timestamp * 1000).toLocaleDateString()}
+                      {new Date().toLocaleDateString()}
                     </span>
                   </div>
                   <div className="flex justify-between items-end">
                     <div>
                       <p className="text-sm font-black text-slate-900 line-clamp-1 group-hover:text-blue-600 transition-colors">
-                        {trade.shares.toFixed(2)} Shares
+                        {position.shares.toFixed(2)} Shares
                       </p>
                       <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-0.5">
-                        Price: {trade.price.toFixed(2)}¢
+                        P&L: {position.profit_loss.toFixed(2)} CR
                       </p>
                     </div>
                     <div className="text-right">
-                      <p className="text-sm font-black text-slate-900">{trade.credits.toFixed(2)} CR</p>
-                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">TOTAL COST</p>
+                      <p className="text-sm font-black text-slate-900">{position.current_value.toFixed(2)} CR</p>
+                      <p className="text-[9px] font-black text-slate-400 uppercase tracking-widest">CURRENT VALUE</p>
                     </div>
                   </div>
                 </div>
