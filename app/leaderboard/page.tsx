@@ -83,12 +83,12 @@ export default function Leaderboard() {
         {/* Header */}
         <div className="mb-6 md:mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
             </svg>
-            <h1 className="text-3xl md:text-4xl font-black text-slate-900">Leaderboard</h1>
+            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-950 tracking-tight">Leaderboard</h1>
           </div>
-          <p className="text-sm md:text-lg text-slate-600 font-medium">Top performing political analysts</p>
+          <p className="text-sm md:text-base text-slate-600 font-medium leading-relaxed">Top performing political analysts</p>
         </div>
 
         {/* Filters Section */}
@@ -153,7 +153,7 @@ export default function Leaderboard() {
                 placeholder="Search by name..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                className="w-full pl-10 pr-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500"
               />
             </div>
 
@@ -247,7 +247,7 @@ function LeaderboardRow({ entry, rank, type }: { entry: LeaderboardEntry; rank: 
   const medal = getMedal(rank);
 
   return (
-    <div className="flex items-center gap-3 md:gap-4 p-4 md:p-6 hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-transparent transition-all group">
+    <div className="flex items-center gap-3 md:gap-4 p-4 md:p-6 hover:bg-gradient-to-r hover:from-violet-50/50 hover:to-transparent transition-all group">
       {/* Rank */}
       <div className="flex-shrink-0">
         {medal ? (
@@ -269,22 +269,22 @@ function LeaderboardRow({ entry, rank, type }: { entry: LeaderboardEntry; rank: 
       {/* Name & Stats */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-1">
-          <p className="text-base md:text-lg font-black text-slate-900 truncate">{entry.name}</p>
+          <p className="text-base md:text-lg font-bold text-slate-950 truncate">{entry.name}</p>
           {hasBadge && (
-            <span className="px-2 py-0.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] font-black rounded-full">
+            <span className="px-2 py-0.5 bg-gradient-to-r from-purple-500 to-pink-500 text-white text-[10px] font-bold rounded-full">
               ⭐ PRO
             </span>
           )}
         </div>
-        <p className="text-xs md:text-sm text-slate-500 font-semibold">
+        <p className="text-xs md:text-sm text-slate-500 font-medium">
           {getSubtext()}
         </p>
       </div>
 
       {/* Value */}
       <div className="text-right">
-        <p className="text-lg md:text-xl font-black text-slate-900">{getValue()}</p>
-        <p className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider">{type}</p>
+        <p className="text-lg md:text-xl font-bold text-slate-950">{getValue()}</p>
+        <p className="text-[10px] md:text-xs font-semibold text-slate-500 uppercase tracking-wider">{type}</p>
       </div>
     </div>
   );

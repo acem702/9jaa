@@ -69,7 +69,7 @@ export default function PositionsList({ positions }: PositionsListProps) {
               placeholder="Search positions..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500"
             />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function PositionsList({ positions }: PositionsListProps) {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as SortType)}
-              className="px-3 py-2 border border-slate-200 rounded-lg text-xs md:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+              className="px-3 py-2 border border-slate-200 rounded-lg text-xs md:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500"
             >
               <option value="recent">Most Recent</option>
               <option value="pnl">P&L (High to Low)</option>
@@ -142,7 +142,7 @@ function PositionCard({ position }: { position: Position }) {
             </div>
 
             {/* Title */}
-            <h4 className="text-base md:text-lg font-black text-slate-900 mb-3 line-clamp-2 group-hover:text-blue-600 transition-colors">
+            <h4 className="text-base md:text-lg font-black text-slate-900 mb-3 line-clamp-2 group-hover:text-violet-600 transition-colors">
               {position.question.title}
             </h4>
 

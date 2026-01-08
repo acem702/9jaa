@@ -54,7 +54,7 @@ export default function Dropdown({ options, value, onChange, placeholder, classN
       <button
         type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-left focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 hover:bg-slate-50 transition-all flex items-center justify-between gap-2"
+        className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-left focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 hover:bg-slate-50 transition-all flex items-center justify-between gap-2"
       >
         <span className="flex items-center gap-2 truncate">
           {selectedOption?.icon && renderIcon(selectedOption.icon)}
@@ -79,16 +79,16 @@ export default function Dropdown({ options, value, onChange, placeholder, classN
                 key={option.value}
                 type="button"
                 onClick={() => handleSelect(option.value)}
-                className={`w-full px-4 py-3 text-sm font-semibold text-left hover:bg-blue-50 transition-colors flex items-center gap-2 ${
-                  option.value === value
-                    ? 'bg-blue-50 text-blue-600'
+                className={`w-full px-4 py-3 text-sm font-semibold text-left hover:bg-violet-50 transition-colors flex items-center gap-2 ${
+                  option.value === value 
+                    ? 'bg-violet-50 text-violet-600'
                     : 'text-slate-700'
                 }`}
               >
                 {option.icon && renderIcon(option.icon)}
                 <span className="flex-1 truncate">{option.label}</span>
                 {option.value === value && (
-                  <svg className="w-4 h-4 flex-shrink-0 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4 flex-shrink-0 text-violet-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 )}

@@ -27,7 +27,7 @@ export default function Navbar() {
               <Logo size="md" />
             </Link>
             <Link href="/" className="hidden sm:block">
-              <span className="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">9ja Markets</span>
+              <span className="text-xl font-extrabold text-slate-950 group-hover:text-violet-600 transition-colors tracking-tight">9ja Markets</span>
             </Link>
           </div>
             
@@ -55,7 +55,7 @@ export default function Navbar() {
                   onClick={() => setUserMenuOpen(!userMenuOpen)}
                   className="flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-gray-100 transition-colors"
                 >
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-violet-600 to-purple-600 flex items-center justify-center shadow-lg shadow-violet-500/30">
                     <span className="text-white font-bold text-sm">
                       {user.name.charAt(0).toUpperCase()}
                     </span>
@@ -67,8 +67,8 @@ export default function Navbar() {
                     <div className="fixed inset-0 z-10" onClick={() => setUserMenuOpen(false)} />
                     <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-20 animate-in fade-in slide-in-from-top-2 duration-200">
                       <div className="px-4 py-3 border-b border-gray-100">
-                        <p className="text-sm font-semibold text-gray-900">{user.name}</p>
-                        <p className="text-xs text-gray-500">{user.email}</p>
+                        <p className="text-sm font-semibold text-slate-950">{user.name}</p>
+                        <p className="text-xs font-medium text-slate-500">{user.email}</p>
                       </div>
                       <button 
                         onClick={handleLogout}
@@ -82,10 +82,10 @@ export default function Navbar() {
               </div>
             ) : (
               <div className="flex items-center gap-3">
-                <Link href="/login" className="px-4 py-2 text-sm font-semibold text-gray-600 hover:text-gray-900 transition-colors">
+                <Link href="/login" className="px-4 py-2 text-sm font-semibold text-slate-600 hover:text-slate-950 transition-colors">
                   Login
                 </Link>
-                <Link href="/register" className="px-4 py-2 bg-blue-600 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/30 hover:shadow-xl hover:shadow-blue-500/40 transition-all">
+                <Link href="/register" className="px-4 py-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-bold shadow-lg shadow-violet-500/30 hover:shadow-xl hover:shadow-violet-500/40 transition-all">
                   Sign Up
                 </Link>
               </div>
@@ -131,9 +131,9 @@ function NavLink({ href, active, children, icon }: { href: string; active: boole
 
   return (
     <Link href={href}>
-      <span className={`px-3 py-2 rounded-xl font-semibold transition-all cursor-pointer text-sm flex items-center gap-2 ${
+      <span className={`px-3 py-2 rounded-xl font-bold transition-all cursor-pointer text-sm flex items-center gap-2 ${
         active
-          ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
+          ? 'bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-lg shadow-violet-500/30'
           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
       }`}>
         {icon && getIcon()}

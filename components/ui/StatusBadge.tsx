@@ -9,13 +9,13 @@ export default function StatusBadge({ status, variant = 'status' }: StatusBadgeP
 
     if (variant === 'position') {
       return normalizedStatus === 'yes'
-        ? 'bg-blue-50 text-blue-700 border-blue-200'
+        ? 'bg-violet-50 text-violet-700 border-violet-200'
         : 'bg-rose-50 text-rose-700 border-rose-200';
     }
 
     if (variant === 'resolution') {
       return normalizedStatus.includes('yes')
-        ? 'bg-blue-50 text-blue-700 border-blue-100'
+        ? 'bg-violet-50 text-violet-700 border-violet-100'
         : 'bg-rose-50 text-rose-700 border-rose-100';
     }
 

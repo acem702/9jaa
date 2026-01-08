@@ -68,7 +68,7 @@ export default function MobileBottomNav() {
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 safe-area-bottom">
       {/* Active indicator bar */}
-      <div className="h-1 bg-gradient-to-r from-blue-500 to-indigo-500 transition-all duration-300" 
+      <div className="h-1 bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-300" 
            style={{ 
              width: '25%',
              transform: `translateX(${navItems.findIndex(item => pathname === item.href) * 100}%)`
@@ -85,26 +85,26 @@ export default function MobileBottomNav() {
             >
               {/* Active background glow */}
               {isActive && (
-                <div className="absolute inset-0 bg-blue-50 rounded-2xl -z-10 scale-110 animate-pulse" />
+                <div className="absolute inset-0 bg-violet-50 rounded-2xl -z-10 scale-110 animate-pulse" />
               )}
               
               <div className={`transition-all ${
                 isActive 
-                  ? 'text-blue-600 scale-110' 
+                  ? 'text-violet-600 scale-110' 
                   : 'text-slate-400 group-hover:text-slate-600 group-hover:scale-105'
               }`}>
                 {isActive ? item.iconActive : item.icon}
               </div>
               
               <span className={`text-[10px] font-black uppercase tracking-widest transition-all ${
-                isActive ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'
+                isActive ? 'text-violet-600' : 'text-slate-400 group-hover:text-slate-600'
               }`}>
                 {item.label}
               </span>
               
               {/* Active dot indicator */}
               {isActive && (
-                <div className="absolute -top-1 w-1.5 h-1.5 bg-blue-600 rounded-full animate-bounce" />
+                <div className="absolute -top-1 w-1.5 h-1.5 bg-violet-600 rounded-full animate-bounce" />
               )}
             </Link>
           );

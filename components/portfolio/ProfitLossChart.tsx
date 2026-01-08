@@ -67,7 +67,7 @@ export default function ProfitLossChart({ positions }: ProfitLossChartProps) {
                 onClick={() => setTimeFilter(filter.value)}
                 className={`px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-bold transition-all ${
                   timeFilter === filter.value
-                    ? 'bg-blue-600 text-white shadow-md'
+                    ? 'bg-violet-600 text-white shadow-md'
                     : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
                 }`}
               >
@@ -89,11 +89,11 @@ export default function ProfitLossChart({ positions }: ProfitLossChartProps) {
           </div>
           <div className={`rounded-xl p-3 md:p-4 border-2 ${
             netPnL >= 0 
-              ? 'bg-gradient-to-br from-blue-50 to-blue-100/50 border-blue-300' 
+              ? 'bg-gradient-to-br from-violet-50 to-violet-100/50 border-violet-300' 
               : 'bg-gradient-to-br from-slate-50 to-slate-100/50 border-slate-300'
           }`}>
             <p className="text-[10px] md:text-xs font-bold text-slate-700 uppercase tracking-wider mb-1">Net P&L</p>
-            <p className={`text-lg md:text-2xl font-black ${netPnL >= 0 ? 'text-blue-600' : 'text-slate-600'}`}>
+            <p className={`text-lg md:text-2xl font-black ${netPnL >= 0 ? 'text-violet-600' : 'text-slate-600'}`}>
               {netPnL >= 0 ? '+' : ''}{netPnL.toFixed(2)}
             </p>
           </div>
@@ -121,8 +121,8 @@ export default function ProfitLossChart({ positions }: ProfitLossChartProps) {
             <AreaChart data={chartData} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="colorPnl" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                  <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3}/>
+                  <stop offset="95%" stopColor="#7c3aed" stopOpacity={0}/>
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
@@ -157,7 +157,7 @@ export default function ProfitLossChart({ positions }: ProfitLossChartProps) {
               <Area 
                 type="monotone" 
                 dataKey="cumulative" 
-                stroke="#2563eb" 
+                stroke="#7c3aed" 
                 strokeWidth={3}
                 fill="url(#colorPnl)" 
               />

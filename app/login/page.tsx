@@ -36,7 +36,7 @@ export default function Login() {
       </Head>
 
       {/* Left Side - Branding */}
-      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 to-indigo-700 p-12 items-center justify-center relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-violet-600 to-purple-700 p-12 items-center justify-center relative overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 left-20 w-72 h-72 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-20 right-20 w-96 h-96 bg-white rounded-full blur-3xl"></div>
@@ -46,9 +46,9 @@ export default function Login() {
             <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
             </svg>
-            <h1 className="text-5xl font-black text-white">9ja Markets</h1>
+            <h1 className="text-5xl font-extrabold text-white tracking-tight">9ja Markets</h1>
           </div>
-          <p className="text-xl text-blue-100 font-semibold mb-8">
+          <p className="text-xl text-violet-100 font-semibold mb-8 leading-relaxed">
             Express your opinions on political outcomes and compete with others
           </p>
           <div className="space-y-4">
@@ -60,7 +60,7 @@ export default function Login() {
               </div>
               <div>
                 <h3 className="text-white font-bold mb-1">Express Your Views</h3>
-                <p className="text-sm text-blue-200">Share your political predictions and insights</p>
+                <p className="text-sm text-violet-200">Share your political predictions and insights</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -71,7 +71,7 @@ export default function Login() {
               </div>
               <div>
                 <h3 className="text-white font-bold mb-1">Track Performance</h3>
-                <p className="text-sm text-blue-200">Monitor your profit and accuracy over time</p>
+                <p className="text-sm text-violet-200">Monitor your profit and accuracy over time</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -82,7 +82,7 @@ export default function Login() {
               </div>
               <div>
                 <h3 className="text-white font-bold mb-1">Compete & Win</h3>
-                <p className="text-sm text-blue-200">Climb the leaderboard and prove your skills</p>
+                <p className="text-sm text-violet-200">Climb the leaderboard and prove your skills</p>
               </div>
             </div>
           </div>
@@ -96,15 +96,15 @@ export default function Login() {
           <div className="mb-8">
             <Link href="/">
               <div className="flex items-center gap-3 mb-2">
-                <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900 hover:text-blue-600 transition-colors cursor-pointer">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-slate-950 hover:text-violet-600 transition-colors cursor-pointer tracking-tight">
                   9ja Markets
                 </h2>
               </div>
             </Link>
-            <p className="text-slate-600 font-medium">Welcome back! Sign in to continue</p>
+            <p className="text-base text-slate-600 font-medium leading-relaxed">Welcome back! Sign in to continue</p>
           </div>
 
           {/* Login Card */}
@@ -138,7 +138,7 @@ export default function Login() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
-                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm font-medium"
+                    className="w-full pl-11 pr-4 py-3 border border-slate-200 rounded-xl focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all text-sm font-medium"
                     placeholder="you@example.com"
                   />
                 </div>
@@ -160,7 +160,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
-                    className="w-full pl-11 pr-12 py-3 border border-slate-200 rounded-xl focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 outline-none transition-all text-sm font-medium"
+                    className="w-full pl-11 pr-12 py-3 border border-slate-200 rounded-xl focus:border-violet-500 focus:ring-2 focus:ring-violet-500/20 outline-none transition-all text-sm font-medium"
                     placeholder="••••••••"
                   />
                   <button
@@ -186,7 +186,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white rounded-xl font-bold text-base transition-all shadow-lg shadow-blue-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                className="w-full py-3.5 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white rounded-xl font-bold text-base transition-all shadow-lg shadow-violet-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               >
                 {loading ? (
                   <>
@@ -211,7 +211,7 @@ export default function Login() {
               <p className="text-sm text-slate-600">
                 Don't have an account?{' '}
                 <Link href="/register">
-                  <span className="text-blue-600 hover:text-blue-700 font-bold cursor-pointer">
+                  <span className="text-violet-600 hover:text-violet-700 font-bold cursor-pointer">
                     Sign up for free
                   </span>
                 </Link>
@@ -220,14 +220,14 @@ export default function Login() {
           </div>
 
           {/* Demo Account Info */}
-          <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-xl">
+          <div className="mt-6 p-4 bg-violet-50 border border-violet-200 rounded-xl">
             <div className="flex items-start gap-3">
-              <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+              <svg className="w-5 h-5 text-violet-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                 <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
               </svg>
               <div>
-                <p className="text-xs font-bold text-blue-900 mb-1">Try Demo Account</p>
-                <p className="text-xs text-blue-700">
+                <p className="text-xs font-bold text-violet-900 mb-1">Try Demo Account</p>
+                <p className="text-xs text-violet-700">
                   <strong>Email:</strong> user1@example.com<br />
                   <strong>Password:</strong> password
                 </p>

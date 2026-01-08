@@ -113,7 +113,7 @@ export default function Register() {
                 <svg className="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                 </svg>
-                <h2 className="text-3xl md:text-4xl font-black text-slate-900 hover:text-emerald-600 transition-colors cursor-pointer">
+                <h2 className="text-3xl md:text-4xl font-extrabold text-slate-950 hover:text-emerald-600 transition-colors cursor-pointer tracking-tight">
                   9ja Markets
                 </h2>
               </div>

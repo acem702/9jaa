@@ -69,7 +69,7 @@ export default function MarketDetail() {
         <Navbar />
         <div className="flex flex-col justify-center items-center h-[60vh] gap-4">
           <p className="text-slate-500 font-bold text-lg">Market not found</p>
-          <Link href="/" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors">
+          <Link href="/" className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-bold hover:from-violet-700 hover:to-purple-700 transition-colors">
             Back to Markets
           </Link>
         </div>
@@ -171,7 +171,7 @@ export default function MarketDetail() {
       <main className="max-w-7xl mx-auto px-4 py-6 pb-32">
         {/* Breadcrumb */}
         <div className="mb-6">
-          <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-semibold text-sm group">
+          <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-violet-600 transition-colors font-semibold text-sm group">
             <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/>
             </svg>
@@ -200,27 +200,27 @@ export default function MarketDetail() {
                 </div>
                 
                 {/* Market Question - Large Headline */}
-                <h1 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight mb-4">
+                <h1 className="text-3xl md:text-4xl font-extrabold text-slate-950 leading-tight mb-4 tracking-tight">
                   {question.title}
                 </h1>
 
                 {/* Short Description */}
-                <p className="text-slate-600 text-base leading-relaxed mb-6">
+                <p className="text-slate-600 text-base leading-relaxed mb-6 font-medium">
                   {question.description}
                 </p>
 
                 {/* Sentiment Summary - Big Number */}
-                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-6 border border-violet-100">
                   <div className="flex items-center justify-between mb-2">
                     <div>
                       <p className="text-sm font-semibold text-slate-600 mb-1">Current Sentiment</p>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-5xl font-black text-blue-600">{yesPrice}%</span>
+                        <span className="text-5xl font-extrabold text-violet-600">{yesPrice}%</span>
                         <span className="text-xl font-bold text-slate-500">YES</span>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="text-3xl font-black text-slate-300">{noPrice}%</div>
+                      <div className="text-3xl font-extrabold text-slate-300">{noPrice}%</div>
                       <div className="text-sm font-semibold text-slate-400">NO</div>
                     </div>
                   </div>
@@ -234,7 +234,7 @@ export default function MarketDetail() {
             {/* Price Chart Section */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
               <div className="p-6">
-                <h2 className="text-xl font-black text-slate-900 mb-1">Sentiment Over Time</h2>
+                <h2 className="text-xl font-bold text-slate-950 mb-1">Sentiment Over Time</h2>
                 <p className="text-sm text-slate-500 font-medium mb-6">How public belief has evolved</p>
                 <div className="h-[400px]">
                   <PriceChart questionId={id as string} />
@@ -244,9 +244,9 @@ export default function MarketDetail() {
 
             {/* Market Details */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-6">
-              <h2 className="text-xl font-black text-slate-900 mb-4">Market Details</h2>
+              <h2 className="text-xl font-bold text-slate-950 mb-4">Market Details</h2>
               <div className="prose prose-slate max-w-none">
-                <p className="text-slate-700 leading-relaxed">
+                <p className="text-slate-700 leading-relaxed font-medium">
                   {question.description}
                 </p>
               </div>
@@ -312,9 +312,9 @@ function StatCard({ icon, label, value, subtitle }: { icon: React.ReactNode; lab
     <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex items-center gap-2 mb-2">
         <div className="text-slate-400">{icon}</div>
-        <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{label}</p>
+        <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">{label}</p>
       </div>
-      <p className="text-2xl font-black text-slate-900 mb-0.5">{value}</p>
+      <p className="text-2xl font-bold text-slate-950 mb-0.5">{value}</p>
       <p className="text-xs text-slate-400 font-medium">{subtitle}</p>
     </div>
   );

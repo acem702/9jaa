@@ -24,7 +24,7 @@ export default function Toast({ message, type = 'success', duration = 3000, onCl
   const bgColor = {
     success: 'from-emerald-500 to-emerald-600',
     error: 'from-rose-500 to-rose-600',
-    info: 'from-blue-500 to-indigo-600'
+    info: 'from-violet-500 to-purple-600'
   }[type];
 
   const icon = {

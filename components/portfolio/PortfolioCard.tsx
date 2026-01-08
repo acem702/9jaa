@@ -28,7 +28,7 @@ export default function PortfolioCard({
   const isProfit = safePnL >= 0;
 
   return (
-    <div className="bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl shadow-2xl overflow-hidden">
+    <div className="bg-gradient-to-br from-violet-600 to-purple-700 rounded-3xl shadow-2xl overflow-hidden">
       <div className="p-8">
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
@@ -73,7 +73,7 @@ export default function PortfolioCard({
         {/* Action Buttons */}
         <div className="grid grid-cols-2 gap-3">
           <Link href="/">
-            <button className="w-full py-3 bg-white text-blue-600 rounded-xl font-bold hover:bg-blue-50 transition-all shadow-lg">
+            <button className="w-full py-3 bg-white text-violet-600 rounded-xl font-bold hover:bg-violet-50 transition-all shadow-lg">
               Browse Markets
             </button>
           </Link>

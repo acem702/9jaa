@@ -73,7 +73,7 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
   return (
     <div className="bg-white rounded-2xl border-2 border-slate-200 shadow-xl overflow-hidden">
       {/* Header */}
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 border-b border-slate-200">
+      <div className="bg-gradient-to-br from-violet-50 to-purple-50 p-6 border-b border-slate-200">
         <h3 className="text-2xl font-black text-slate-900 mb-1">Express Your Opinion</h3>
         <p className="text-sm text-slate-600 font-medium">How confident are you about this outcome?</p>
       </div>
@@ -161,7 +161,7 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
               onBlur={handleGetQuote}
               disabled={!isActive}
               placeholder="Enter amount"
-              className="w-full px-4 py-4 text-2xl font-bold border-2 border-slate-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition-all disabled:bg-slate-50 disabled:cursor-not-allowed"
+              className="w-full px-4 py-4 text-2xl font-bold border-2 border-slate-200 rounded-xl focus:border-violet-500 focus:ring-4 focus:ring-violet-100 outline-none transition-all disabled:bg-slate-50 disabled:cursor-not-allowed"
             />
             <span className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold text-lg">
               credits
@@ -217,10 +217,10 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
 
         {/* User Balance */}
         {user && (
-          <div className="mb-6 p-4 bg-blue-50 border border-blue-100 rounded-xl">
+          <div className="mb-6 p-4 bg-violet-50 border border-violet-100 rounded-xl">
             <div className="flex items-center justify-between">
               <span className="text-sm text-slate-600 font-semibold">Your balance</span>
-              <span className="text-lg font-black text-blue-600">{user.influence_credits.toLocaleString()} credits</span>
+              <span className="text-lg font-black text-violet-600">{user.influence_credits.toLocaleString()} credits</span>
             </div>
           </div>
         )}
@@ -257,7 +257,7 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
             </p>
             <button 
               onClick={() => router.push('/login')} 
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg font-bold hover:bg-blue-700 transition-colors"
+              className="px-6 py-2 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-lg font-bold hover:from-violet-700 hover:to-purple-700 transition-colors"
             >
               Login to Participate
             </button>

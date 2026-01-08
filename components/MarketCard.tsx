@@ -74,9 +74,9 @@ export default function MarketCard({ question }: MarketCardProps) {
 
   return (
     <Link href={`/market/${question.id}`}>
-      <div className="group relative bg-white rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+      <div className="group relative bg-white rounded-2xl border border-slate-200 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1">
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-50/0 via-transparent to-purple-50/0 group-hover:from-blue-50/30 group-hover:to-purple-50/30 transition-all duration-500 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-50/0 via-transparent to-purple-50/0 group-hover:from-violet-50/30 group-hover:to-purple-50/30 transition-all duration-500 pointer-events-none" />
         
         {/* Shine effect on hover */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
@@ -91,7 +91,7 @@ export default function MarketCard({ question }: MarketCardProps) {
               
               {/* Trend Indicator */}
               {sparklineData.length > 0 && (
-                <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-black ${
+                <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold ${
                   trend === 'up' ? 'bg-emerald-50 text-emerald-700' :
                   trend === 'down' ? 'bg-rose-50 text-rose-700' :
                   'bg-slate-50 text-slate-600'
@@ -118,21 +118,21 @@ export default function MarketCard({ question }: MarketCardProps) {
                 <svg className="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
                 </svg>
-                <span className="font-bold text-slate-600">{formatLiquidity(totalLiquidity)}</span>
+                <span className="font-semibold text-slate-700">{formatLiquidity(totalLiquidity)}</span>
               </div>
               {transactionCount > 0 && (
                 <div className="flex items-center gap-1">
                   <svg className="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  <span className="font-bold text-slate-600">{transactionCount}</span>
+                  <span className="font-semibold text-slate-700">{transactionCount}</span>
                 </div>
               )}
             </div>
           </div>
 
           {/* Question Title - Center Focus */}
-          <h3 className="text-base md:text-lg font-bold text-slate-900 leading-snug mb-2 group-hover:text-blue-600 transition-colors line-clamp-2 min-h-[2.5rem]">
+          <h3 className="text-base md:text-lg font-bold text-slate-950 leading-snug mb-2 group-hover:text-violet-600 transition-colors line-clamp-2 min-h-[2.5rem]">
             {question.title}
           </h3>
 
@@ -193,23 +193,23 @@ export default function MarketCard({ question }: MarketCardProps) {
                 </svg>
                 {/* Percentage display below gauge */}
                 <div className="absolute -bottom-1 left-1/2 -translate-x-1/2">
-                  <span className={`text-xl font-black ${
-                    yesPrice > 60 ? 'text-emerald-600' : yesPrice < 40 ? 'text-rose-600' : 'text-slate-600'
+                  <span className={`text-xl font-extrabold ${
+                    yesPrice > 60 ? 'text-emerald-600' : yesPrice < 40 ? 'text-rose-600' : 'text-slate-700'
                   }`}>{yesPrice}%</span>
                 </div>
               </div>
-              <span className="text-[9px] font-bold text-slate-400 uppercase tracking-wide">YES Sentiment</span>
+              <span className="text-[9px] font-medium text-slate-500 uppercase tracking-wide">YES Sentiment</span>
             </div>
 
             {/* Compact Price Buttons - Fixed Width */}
             <div className="flex gap-2">
               <div className="w-16 bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-lg p-2 border border-emerald-200 group-hover:shadow-md transition-all">
-                <div className="text-[8px] font-black text-emerald-700 uppercase tracking-wider mb-0.5">YES</div>
-                <div className="text-base font-black text-emerald-600">{yesPrice}¢</div>
+                <div className="text-[8px] font-bold text-emerald-700 uppercase tracking-wider mb-0.5">YES</div>
+                <div className="text-base font-extrabold text-emerald-600">{yesPrice}¢</div>
               </div>
               <div className="w-16 bg-gradient-to-br from-rose-50 to-rose-100/50 rounded-lg p-2 border border-rose-200 group-hover:shadow-md transition-all">
-                <div className="text-[8px] font-black text-rose-700 uppercase tracking-wider mb-0.5">NO</div>
-                <div className="text-base font-black text-rose-600">{noPrice}¢</div>
+                <div className="text-[8px] font-bold text-rose-700 uppercase tracking-wider mb-0.5">NO</div>
+                <div className="text-base font-extrabold text-rose-600">{noPrice}¢</div>
               </div>
             </div>
           </div>
