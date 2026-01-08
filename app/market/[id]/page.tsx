@@ -233,10 +233,10 @@ export default function MarketDetail() {
 
             {/* Price Chart Section */}
             <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
-              <div className="p-6">
+              <div className="p-4 md:p-6">
                 <h2 className="text-xl font-bold text-slate-950 mb-1">Sentiment Over Time</h2>
-                <p className="text-sm text-slate-500 font-medium mb-6">How public belief has evolved</p>
-                <div className="h-[400px]">
+                <p className="text-sm text-slate-500 font-medium mb-4 md:mb-6">How public belief has evolved</p>
+                <div className="h-[350px] md:h-[400px] -mx-2 md:mx-0">
                   <PriceChart questionId={id as string} />
                 </div>
               </div>

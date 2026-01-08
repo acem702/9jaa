@@ -47,6 +47,19 @@ export default function PriceChart({ questionId }: PriceChartProps) {
     }
   };
 
+  // Determine trend based on first and last data points
+  const getTrend = () => {
+    if (chartData.length < 2) return 'neutral';
+    const first = chartData[0].yesPrice;
+    const last = chartData[chartData.length - 1].yesPrice;
+    const change = last - first;
+    if (Math.abs(change) < 1) return 'neutral';
+    return change > 0 ? 'up' : 'down';
+  };
+
+  const trend = getTrend();
+  const lineColor = trend === 'up' ? '#10b981' : trend === 'down' ? '#ef4444' : '#7c3aed';
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
@@ -68,19 +81,12 @@ export default function PriceChart({ questionId }: PriceChartProps) {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={chartData}
-          margin={{ top: 5, right: 5, left: 0, bottom: 5 }}
+          margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
         >
           <CartesianGrid 
             strokeDasharray="3 3" 
             stroke="#e2e8f0" 
             vertical={false}
-          />
-          <XAxis 
-            dataKey="displayDate"
-            stroke="#94a3b8"
-            tick={{ fill: '#64748b', fontSize: 12 }}
-            tickLine={false}
-            axisLine={{ stroke: '#e2e8f0' }}
           />
           <YAxis 
             stroke="#94a3b8"
@@ -89,6 +95,7 @@ export default function PriceChart({ questionId }: PriceChartProps) {
             axisLine={{ stroke: '#e2e8f0' }}
             tickFormatter={(value: number) => `${value}%`}
             domain={[0, 100]}
+            width={45}
           />
           <Tooltip 
             contentStyle={{
@@ -99,16 +106,16 @@ export default function PriceChart({ questionId }: PriceChartProps) {
               boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
             }}
             labelStyle={{ color: '#0f172a', fontWeight: 600, fontSize: '12px' }}
-            itemStyle={{ color: '#2563eb', fontSize: '12px' }}
+            itemStyle={{ color: lineColor, fontSize: '12px' }}
             formatter={(value: any) => [`${value.toFixed(1)}%`, 'YES']}
           />
           <Line 
             type="monotone" 
             dataKey="yesPrice" 
-            stroke="#2563eb" 
-            strokeWidth={3}
+            stroke={lineColor}
+            strokeWidth={1}
             dot={false}
-            activeDot={{ r: 6, fill: '#2563eb' }}
+            activeDot={{ r: 6, fill: lineColor }}
           />
         </LineChart>
       </ResponsiveContainer>
