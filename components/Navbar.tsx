@@ -60,6 +60,11 @@ export default function Navbar() {
                       {user.name.charAt(0).toUpperCase()}
                     </span>
                   </div>
+                  {/* Influence Credits */}
+                  <div className="flex flex-col items-start">
+                    <span className="text-xs font-semibold text-slate-950 leading-tight hidden sm:block">{user.name.split(' ')[0]}</span>
+                    <span className="text-[10px] font-bold text-violet-600 leading-tight">{user.influence_credits.toLocaleString()} pts</span>
+                  </div>
                 </button>
 
                 {userMenuOpen && (
