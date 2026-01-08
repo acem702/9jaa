@@ -35,12 +35,14 @@ export default function Home() {
 
   useEffect(() => {
     fetchQuestions();
-  }, []);
+  }, [activeTab]); // Re-fetch when tab changes
 
   const fetchQuestions = async () => {
     try {
       setLoading(true);
-      const { questions: data } = await api.getQuestions();
+      // Pass status to API, but map 'all' to undefined
+      const status = activeTab === 'all' ? undefined : activeTab;
+      const { questions: data } = await api.getQuestions(status);
       setQuestions(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Failed to fetch questions:', error);
@@ -50,12 +52,11 @@ export default function Home() {
     }
   };
 
+  // Only filter by search query, status filtering is done by API
   const filteredQuestions = questions.filter(q => {
     const matchesSearch = q.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          q.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesTab = activeTab === 'all' || 
-                      (q.status && q.status.toLowerCase() === activeTab.toLowerCase());
-    return matchesSearch && matchesTab;
+    return matchesSearch;
   });
 
   const tabs = [

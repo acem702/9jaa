@@ -237,10 +237,16 @@ function LeaderboardRow({ entry, rank, type }: { entry: LeaderboardEntry; rank: 
   };
 
   const getSubtext = () => {
+    if (type === 'volume') {
+      return `${entry.trade_count || 0} trades`;
+    }
+    if (type === 'profit') {
+      return `${entry.markets_traded || 0} markets`;
+    }
     if (type === 'accuracy') {
       return `${entry.correct_predictions || 0}/${entry.total_predictions || 0} correct`;
     }
-    return `${entry.trade_count || 0} trades`;
+    return '';
   };
 
   const hasBadge = entry.trade_count && entry.trade_count >= 100;

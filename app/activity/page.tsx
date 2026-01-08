@@ -37,8 +37,10 @@ function ActivityPage() {
   // Filter positions
   const filteredPositions = positions.filter(p => {
     if (filter === 'all') return true;
-    if (filter === 'yes') return p.position === 'YES';
-    if (filter === 'no') return p.position === 'NO';
+    // Handle both uppercase and potential variations
+    const positionUpper = p.position?.toUpperCase();
+    if (filter === 'yes') return positionUpper === 'YES';
+    if (filter === 'no') return positionUpper === 'NO';
     return true;
   });
 
@@ -186,9 +188,13 @@ function ActivityPage() {
 }
 
 function ActivityCard({ position }: { position: Position }) {
-  const isYes = position.position === 'YES';
+  const isYes = position.position?.toUpperCase() === 'YES';
   const isProfit = (position.profit_loss || 0) > 0;
   const profitPercent = position.profit_loss_pct || 0;
+  
+  // Calculate average price per share
+  const avgPrice = position.shares > 0 ? position.cost / position.shares : 0;
+  const currentPrice = position.shares > 0 ? position.current_value / position.shares : 0;
 
   return (
     <Link href={`/market/${position.question.id}`}>
@@ -234,11 +240,15 @@ function ActivityCard({ position }: { position: Position }) {
               </div>
             </div>
 
-            {/* Stats Row */}
-            <div className="grid grid-cols-3 gap-3 mt-3 pt-3 border-t border-slate-100">
+            {/* Stats Row - 4 columns */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-slate-100">
               <div>
                 <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Shares</p>
                 <p className="text-sm font-bold text-slate-950">{(position.shares || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+              </div>
+              <div>
+                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Avg Cost</p>
+                <p className="text-sm font-bold text-slate-950">{avgPrice.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</p>
               </div>
               <div>
                 <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Value</p>
