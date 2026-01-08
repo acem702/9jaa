@@ -157,7 +157,7 @@ export default function MarketCard({ question }: MarketCardProps) {
           <div className="flex items-end justify-between gap-3">
             {/* Half-Circle Gauge */}
             <div className="flex-1 flex flex-col items-center">
-              <div className="relative w-24 h-12 mb-1">
+              <div className="relative w-24 h-12">
                 <svg className="w-full h-full" viewBox="0 0 100 50" preserveAspectRatio="xMidYMax meet">
                   {/* Background arc (light gray) */}
                   <path
@@ -191,13 +191,11 @@ export default function MarketCard({ question }: MarketCardProps) {
                   {/* Center dot */}
                   <circle cx="50" cy="45" r="3" fill={yesPrice > 60 ? '#059669' : yesPrice < 40 ? '#dc2626' : '#475569'} />
                 </svg>
-                {/* Percentage display below gauge */}
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2">
-                  <span className={`text-xl font-extrabold ${
-                    yesPrice > 60 ? 'text-emerald-600' : yesPrice < 40 ? 'text-rose-600' : 'text-slate-700'
-                  }`}>{yesPrice}%</span>
-                </div>
               </div>
+              {/* Percentage display below gauge */}
+              <span className={`text-xl font-extrabold mb-0.5 ${
+                yesPrice > 60 ? 'text-emerald-600' : yesPrice < 40 ? 'text-rose-600' : 'text-slate-700'
+              }`}>{yesPrice}%</span>
               <span className="text-[9px] font-medium text-slate-500 uppercase tracking-wide">YES Sentiment</span>
             </div>
 
