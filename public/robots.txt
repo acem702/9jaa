@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://9jamarkets.com/sitemap.xml

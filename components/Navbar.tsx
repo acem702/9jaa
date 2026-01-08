@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { useState } from 'react';
+import Logo from './Logo';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -21,23 +22,27 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2 group">
-              <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center transform group-hover:scale-105 transition-transform shadow-lg shadow-blue-500/30">
-                <span className="text-white font-black text-xl">9</span>
-              </div>
+          <div className="flex items-center gap-3">
+            <Link href="/" className="flex items-center group">
+              <Logo size="md" />
+            </Link>
+            <Link href="/" className="hidden sm:block">
+              <span className="text-xl font-black text-slate-900 group-hover:text-blue-600 transition-colors">9ja Markets</span>
             </Link>
           </div>
             
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-1">
-            <NavLink href="/" active={pathname === '/'}>
+            <NavLink href="/" active={pathname === '/'} icon="chart">
               Markets
             </NavLink>
-            <NavLink href="/portfolio" active={pathname === '/portfolio'}>
+            <NavLink href="/portfolio" active={pathname === '/portfolio'} icon="briefcase">
               Portfolio
             </NavLink>
-            <NavLink href="/leaderboard" active={pathname === '/leaderboard'}>
+            <NavLink href="/activity" active={pathname === '/activity'} icon="activity">
+              Activity
+            </NavLink>
+            <NavLink href="/leaderboard" active={pathname === '/leaderboard'} icon="trophy">
               Leaderboard
             </NavLink>
           </div>
@@ -92,14 +97,46 @@ export default function Navbar() {
   );
 }
 
-function NavLink({ href, active, children }: { href: string; active: boolean; children: React.ReactNode }) {
+function NavLink({ href, active, children, icon }: { href: string; active: boolean; children: React.ReactNode; icon?: string }) {
+  const getIcon = () => {
+    switch(icon) {
+      case 'chart':
+        return (
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        );
+      case 'briefcase':
+        return (
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+          </svg>
+        );
+      case 'activity':
+        return (
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+          </svg>
+        );
+      case 'trophy':
+        return (
+          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+          </svg>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <Link href={href}>
-      <span className={`px-4 py-2 rounded-xl font-semibold transition-all cursor-pointer text-sm ${
+      <span className={`px-3 py-2 rounded-xl font-semibold transition-all cursor-pointer text-sm flex items-center gap-2 ${
         active
           ? 'bg-blue-600 text-white shadow-lg shadow-blue-500/30'
           : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
       }`}>
+        {icon && getIcon()}
         {children}
       </span>
     </Link>

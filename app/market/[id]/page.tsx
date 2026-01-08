@@ -3,13 +3,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import dynamic from "next/dynamic";
+import Head from "next/head";
+import Link from "next/link";
 import { api } from "@/lib/api";
-import { Question, Trade, MarketStats } from "@/types";
+import { Question, MarketStats, Sentiment } from "@/types";
 import { useAuth } from "@/contexts/AuthContext";
 import Navbar from "@/components/Navbar";
 import TradePanel from "@/components/TradePanel";
-import Head from "next/head";
-import Link from "next/link";
+import MobileBottomNav from "@/components/ui/MobileBottomNav";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import StatusBadge from "@/components/ui/StatusBadge";
 
 const PriceChart = dynamic(() => import("@/components/PriceChart"), {
   ssr: false,
@@ -21,6 +24,7 @@ export default function MarketDetail() {
 
   const [question, setQuestion] = useState<Question | null>(null);
   const [stats, setStats] = useState<MarketStats | null>(null);
+  const [sentiment, setSentiment] = useState<Sentiment | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -32,13 +36,15 @@ export default function MarketDetail() {
   const fetchMarketData = async () => {
     try {
       setLoading(true);
-      const [questionData, statsData] = await Promise.all([
+      const [questionData, statsData, sentimentData] = await Promise.all([
         api.getQuestion(id as string),
         api.getMarketStats(id as string),
+        api.getSentiment(id as string),
       ]);
       
       setQuestion(questionData);
       setStats(statsData.stats);
+      setSentiment(sentimentData.sentiment);
     } catch (error) {
       console.error('Failed to fetch market data:', error);
     } finally {
@@ -48,10 +54,10 @@ export default function MarketDetail() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#f1f5f9]">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-purple-50/10">
         <Navbar />
         <div className="flex justify-center items-center h-[60vh]">
-          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-blue-600"></div>
+          <LoadingSpinner size="lg" />
         </div>
       </div>
     );
@@ -59,10 +65,13 @@ export default function MarketDetail() {
 
   if (!question) {
     return (
-      <div className="min-h-screen bg-[#f1f5f9]">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-purple-50/10">
         <Navbar />
-        <div className="flex justify-center items-center h-[60vh]">
-          <p className="text-slate-500 font-bold">Market not found</p>
+        <div className="flex flex-col justify-center items-center h-[60vh] gap-4">
+          <p className="text-slate-500 font-bold text-lg">Market not found</p>
+          <Link href="/" className="px-6 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-colors">
+            Back to Markets
+          </Link>
         </div>
       </div>
     );
@@ -70,98 +79,220 @@ export default function MarketDetail() {
 
   const yesPrice = Math.round(question.market.yes_price * 100);
   const noPrice = Math.round(question.market.no_price * 100);
+  const totalHolders = sentiment?.total_holders || 0;
+  const yesHolders = sentiment?.yes_holders || 0;
+  const noHolders = sentiment?.no_holders || 0;
+
+  // JSON-LD Structured Data for the market
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: question.title,
+    description: question.description,
+    datePublished: question.created_at,
+    dateModified: question.resolved_at || question.locked_at || question.created_at,
+    author: {
+      '@type': 'Person',
+      name: question.creator?.name || 'Anonymous',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: '9ja Markets',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://9jamarkets.com/icon.svg',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `https://9jamarkets.com/market/${id}`,
+    },
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: yesPrice,
+      ratingCount: totalHolders,
+      bestRating: 100,
+      worstRating: 0,
+    },
+  };
+
+  // Breadcrumb structured data
+  const breadcrumbData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://9jamarkets.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: question.title,
+        item: `https://9jamarkets.com/market/${id}`,
+      },
+    ],
+  };
+
+  // Calculate time remaining if locked/closing soon
+  const getStatusMessage = () => {
+    if (question.status === 'resolved') return 'This market has been resolved';
+    if (question.status === 'locked') return 'Closing soon - Trading locked';
+    return 'Open for participation';
+  };
 
   return (
-    <div className="min-h-screen bg-[#f1f5f9]">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-purple-50/10">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbData) }}
+      />
+
       <Head>
-        <title>{question.title} - 9ja Markets</title>
+        <title>{question.title} | Political Prediction Market - 9ja Markets</title>
+        <meta name="description" content={`${question.description.substring(0, 155)}...`} />
+        <meta property="og:title" content={question.title} />
+        <meta property="og:description" content={question.description} />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={question.title} />
+        <meta name="twitter:description" content={question.description} />
       </Head>
 
       <Navbar />
 
       <main className="max-w-7xl mx-auto px-4 py-6 pb-32">
-        {/* Back Link */}
-        <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 mb-6 transition-colors font-bold text-sm">
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/></svg>
-          Back to Markets
-        </Link>
+        {/* Breadcrumb */}
+        <div className="mb-6">
+          <Link href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-blue-600 transition-colors font-semibold text-sm group">
+            <svg className="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 19l-7-7 7-7"/>
+            </svg>
+            Back to Markets
+          </Link>
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Market Header */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 md:p-8">
-              <div className="flex items-center gap-2 mb-4">
-                <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
-                  question.status === 'active' ? 'bg-emerald-50 text-emerald-700 border-emerald-100' : 'bg-slate-50 text-slate-700 border-slate-200'
-                }`}>
-                  {question.status}
-                </span>
-                {question.resolution !== null && (
-                  <span className={`px-2.5 py-0.5 rounded-lg text-[10px] font-black uppercase tracking-widest border ${
-                    question.resolution ? 'bg-blue-50 text-blue-700 border-blue-100' : 'bg-rose-50 text-rose-700 border-rose-100'
-                  }`}>
-                    {question.resolution ? 'YES WON' : 'NO WON'}
+            {/* Header Section */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+              <div className="p-6 md:p-8">
+                {/* Status & Tags */}
+                <div className="flex flex-wrap items-center gap-2 mb-4">
+                  <StatusBadge status={question.status} variant="status" />
+                  {question.resolution !== null && (
+                    <StatusBadge 
+                      status={question.resolution ? 'YES WON' : 'NO WON'} 
+                      variant="resolution" 
+                    />
+                  )}
+                  <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs font-bold rounded-lg">
+                    {getStatusMessage()}
                   </span>
-                )}
+                </div>
+                
+                {/* Market Question - Large Headline */}
+                <h1 className="text-3xl md:text-4xl font-black text-slate-900 leading-tight mb-4">
+                  {question.title}
+                </h1>
+
+                {/* Short Description */}
+                <p className="text-slate-600 text-base leading-relaxed mb-6">
+                  {question.description}
+                </p>
+
+                {/* Sentiment Summary - Big Number */}
+                <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-6 border border-blue-100">
+                  <div className="flex items-center justify-between mb-2">
+                    <div>
+                      <p className="text-sm font-semibold text-slate-600 mb-1">Current Sentiment</p>
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-5xl font-black text-blue-600">{yesPrice}%</span>
+                        <span className="text-xl font-bold text-slate-500">YES</span>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <div className="text-3xl font-black text-slate-300">{noPrice}%</div>
+                      <div className="text-sm font-semibold text-slate-400">NO</div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-500 font-medium mt-3">
+                    Based on {totalHolders} user{totalHolders !== 1 ? 's' : ''} expressing their opinion ({yesHolders} YES, {noHolders} NO)
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Price Chart Section */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-lg overflow-hidden">
+              <div className="p-6">
+                <h2 className="text-xl font-black text-slate-900 mb-1">Sentiment Over Time</h2>
+                <p className="text-sm text-slate-500 font-medium mb-6">How public belief has evolved</p>
+                <div className="h-[400px]">
+                  <PriceChart questionId={id as string} />
+                </div>
+              </div>
+            </div>
+
+            {/* Market Details */}
+            <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-6">
+              <h2 className="text-xl font-black text-slate-900 mb-4">Market Details</h2>
+              <div className="prose prose-slate max-w-none">
+                <p className="text-slate-700 leading-relaxed">
+                  {question.description}
+                </p>
               </div>
               
-              <h1 className="text-2xl md:text-3xl font-black text-slate-900 leading-tight mb-8">
-                {question.title}
-              </h1>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="bg-emerald-50 rounded-2xl p-6 border border-emerald-100 flex flex-col items-center justify-center">
-                  <span className="text-[10px] font-black text-emerald-700 uppercase tracking-widest mb-1">YES</span>
-                  <p className="text-4xl font-black text-emerald-600">{yesPrice}¢</p>
+              {/* Creator Info */}
+              {question.creator && (
+                <div className="mt-6 pt-6 border-t border-slate-100">
+                  <p className="text-xs text-slate-500 font-medium">
+                    Created by <span className="text-slate-700 font-bold">{question.creator.name}</span>
+                  </p>
                 </div>
-                <div className="bg-rose-50 rounded-2xl p-6 border border-rose-100 flex flex-col items-center justify-center">
-                  <span className="text-[10px] font-black text-rose-700 uppercase tracking-widest mb-1">NO</span>
-                  <p className="text-4xl font-black text-rose-600">{noPrice}¢</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Price Chart */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 overflow-hidden">
-              <h3 className="text-lg font-black text-slate-900 mb-6 uppercase tracking-tight">Price History</h3>
-              <div className="h-[350px]">
-                <PriceChart questionId={id as string} />
-              </div>
-            </div>
-
-            {/* About Section */}
-            <div className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
-              <h3 className="text-lg font-black text-slate-900 mb-4 uppercase tracking-tight">About</h3>
-              <p className="text-slate-600 leading-relaxed text-sm">
-                {question.description}
-              </p>
+              )}
             </div>
 
             {/* Stats Grid */}
             {stats && (
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Volume</p>
-                  <p className="text-lg font-black text-slate-900">{stats.total_volume.toLocaleString()}</p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Trades</p>
-                  <p className="text-lg font-black text-slate-900">{stats.total_trades}</p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Holders</p>
-                  <p className="text-lg font-black text-slate-900">{stats.unique_traders}</p>
-                </div>
-                <div className="bg-white rounded-2xl border border-slate-100 p-5 shadow-sm text-center">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Liquidity</p>
-                  <p className="text-lg font-black text-slate-900">{Math.round(stats.liquidity.total).toLocaleString()}</p>
-                </div>
+                <StatCard 
+                  icon={<VolumeIcon />}
+                  label="Total Volume"
+                  value={stats.total_volume.toLocaleString()}
+                  subtitle="credits traded"
+                />
+                <StatCard 
+                  icon={<TradesIcon />}
+                  label="Trades"
+                  value={stats.total_trades.toLocaleString()}
+                  subtitle="transactions"
+                />
+                <StatCard 
+                  icon={<HoldersIcon />}
+                  label="Participants"
+                  value={stats.unique_traders.toLocaleString()}
+                  subtitle="users"
+                />
+                <StatCard 
+                  icon={<LiquidityIcon />}
+                  label="Liquidity"
+                  value={Math.round(stats.liquidity.total).toLocaleString()}
+                  subtitle="pool depth"
+                />
               </div>
             )}
           </div>
 
-          {/* Sidebar */}
+          {/* Sidebar - Action Panel */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
               <TradePanel question={question} onTradeComplete={fetchMarketData} />
@@ -170,25 +301,54 @@ export default function MarketDetail() {
         </div>
       </main>
 
-      {/* Mobile Bottom Nav */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200 md:hidden flex justify-around py-4 px-4 z-50">
-        <Link href="/" className="flex flex-col items-center gap-1.5 transition-all active:scale-95">
-          <svg className="w-6 h-6 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-          <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Home</span>
-        </Link>
-        <Link href="/portfolio" className="flex flex-col items-center gap-1.5 text-slate-400 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
-          <span className="text-[10px] font-black uppercase tracking-widest">Portfolio</span>
-        </Link>
-        <Link href="/leaderboard" className="flex flex-col items-center gap-1.5 text-slate-400 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-          <span className="text-[10px] font-black uppercase tracking-widest">Ranks</span>
-        </Link>
-        <Link href="/activity" className="flex flex-col items-center gap-1.5 text-slate-400 transition-all active:scale-95">
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          <span className="text-[10px] font-black uppercase tracking-widest">Activity</span>
-        </Link>
-      </div>
+      <MobileBottomNav />
     </div>
+  );
+}
+
+// Stat Card Component
+function StatCard({ icon, label, value, subtitle }: { icon: React.ReactNode; label: string; value: string; subtitle: string }) {
+  return (
+    <div className="bg-white rounded-2xl border border-slate-200 p-5 shadow-sm hover:shadow-md transition-shadow">
+      <div className="flex items-center gap-2 mb-2">
+        <div className="text-slate-400">{icon}</div>
+        <p className="text-[10px] text-slate-500 font-black uppercase tracking-widest">{label}</p>
+      </div>
+      <p className="text-2xl font-black text-slate-900 mb-0.5">{value}</p>
+      <p className="text-xs text-slate-400 font-medium">{subtitle}</p>
+    </div>
+  );
+}
+
+// Icons
+function VolumeIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+    </svg>
+  );
+}
+
+function TradesIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+    </svg>
+  );
+}
+
+function HoldersIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+    </svg>
+  );
+}
+
+function LiquidityIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
   );
 }
