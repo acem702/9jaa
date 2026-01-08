@@ -76,19 +76,42 @@ export default function Home() {
       <Navbar />
 
       <main className="max-w-4xl mx-auto px-4 pt-6 pb-32">
-        {/* Hero Section */}
+        {/* Hero Section - Simplified & Trustworthy */}
         <div className="mb-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-2">
-            <svg className="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-950 tracking-tight">
-              Political Prediction Markets
-            </h1>
+          {/* Simple Icon */}
+          <div className="flex justify-center mb-4">
+            <div className="w-12 h-12 bg-gradient-to-br from-violet-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-violet-500/20">
+              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+            </div>
           </div>
-          <p className="text-base text-slate-600 font-medium leading-relaxed">
-            Express your confidence on political outcomes
+
+          {/* Clean Headline */}
+          <h1 className="text-3xl md:text-4xl font-extrabold text-slate-950 tracking-tight mb-3 leading-tight">
+            Track Public Opinion on Nigerian Politics
+          </h1>
+
+          {/* Trustworthy Description */}
+          <p className="text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto mb-6">
+            See what Nigerians think about political outcomes. Real sentiment data from engaged citizens.
           </p>
+
+          {/* Trust Indicators - Simple */}
+          <div className="flex items-center justify-center gap-8 text-sm text-slate-500">
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              </svg>
+              <span className="font-semibold">{questions.length} Active Topics</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <svg className="w-4 h-4 text-violet-600" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+              </svg>
+              <span className="font-semibold">Updated Daily</span>
+            </div>
+          </div>
         </div>
 
         {/* Search Input */}
