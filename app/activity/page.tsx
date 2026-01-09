@@ -66,7 +66,7 @@ function ActivityPage() {
   }, {} as Record<string, Position[]>);
 
   return (
-    <div className="min-h-screen bg-[#f1f5f9]">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <Head>
         <title>Activity - 9ja Markets</title>
         <meta name="description" content="View your recent market transactions and trading activity" />
@@ -78,17 +78,21 @@ function ActivityPage() {
         {/* Header */}
         <div className="mb-6 md:mb-8">
           <div className="flex items-center gap-3 mb-2">
-            <svg className="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
-            </svg>
-            <h1 className="text-3xl md:text-4xl font-extrabold text-slate-950 tracking-tight">Activity Feed</h1>
+            <div className="p-2 bg-violet-100 rounded-xl">
+              <svg className="w-7 h-7 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-extrabold text-slate-950 tracking-tight">Activity Feed</h1>
+              <p className="text-sm text-slate-500 font-medium">Your recent market transactions and opinions</p>
+            </div>
           </div>
-          <p className="text-sm md:text-base text-slate-600 font-medium leading-relaxed">Your recent market transactions and opinions</p>
         </div>
 
-        {/* Filters */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-4 md:p-6 mb-6">
-          <div className="flex flex-col sm:flex-row gap-3">
+        {/* Filters - One row on mobile */}
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-sm p-3 md:p-4 mb-6 relative z-20">
+          <div className="grid grid-cols-2 gap-2 md:gap-3">
             {/* Position Filter */}
             <Dropdown
               options={[
@@ -110,7 +114,7 @@ function ActivityPage() {
               ]}
               value={filter}
               onChange={(value) => setFilter(value as 'all' | 'yes' | 'no')}
-              className="flex-1"
+              className="w-full"
             />
 
             {/* Sort Dropdown */}
@@ -134,7 +138,7 @@ function ActivityPage() {
               ]}
               value={sortBy}
               onChange={(value) => setSortBy(value as 'recent' | 'profit' | 'value')}
-              className="flex-1"
+              className="w-full"
             />
           </div>
         </div>
@@ -145,14 +149,16 @@ function ActivityPage() {
             <LoadingSpinner size="lg" />
           </div>
         ) : sortedPositions.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-slate-200 shadow-lg p-12 md:p-20 text-center">
-            <svg className="w-16 h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-            </svg>
-            <p className="text-slate-400 font-bold mb-2">No activity yet</p>
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 shadow-lg p-12 md:p-20 text-center">
+            <div className="w-16 h-16 mx-auto mb-4 bg-slate-100 rounded-2xl flex items-center justify-center">
+              <svg className="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p className="text-slate-700 font-bold mb-2">No activity yet</p>
             <p className="text-sm text-slate-500 mb-6">Start expressing your opinions to see activity here</p>
             <Link href="/">
-              <button className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-bold hover:from-violet-700 hover:to-purple-700 transition-colors">
+              <button className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-bold hover:from-violet-700 hover:to-purple-700 transition-all duration-200 shadow-lg shadow-violet-500/30 active:scale-95">
                 Browse Markets
               </button>
             </Link>
@@ -163,17 +169,19 @@ function ActivityPage() {
               <div key={date}>
                 {/* Date Header */}
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="h-px flex-1 bg-slate-200"></div>
-                  <span className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 py-1 bg-slate-100 rounded-full">
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
+                  <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full border border-slate-200/60 shadow-sm">
                     {date}
                   </span>
-                  <div className="h-px flex-1 bg-slate-200"></div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
                 </div>
 
                 {/* Activity Cards */}
                 <div className="space-y-3">
-                  {datePositions.map((position) => (
-                    <ActivityCard key={position.id} position={position} />
+                  {datePositions.map((position, index) => (
+                    <div key={position.id}>
+                      <ActivityCard position={position} />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -198,21 +206,21 @@ function ActivityCard({ position }: { position: Position }) {
 
   return (
     <Link href={`/market/${position.question.id}`}>
-      <div className="bg-white rounded-2xl border border-slate-200 hover:border-violet-300 hover:shadow-lg transition-all p-4 md:p-5 group">
+      <div className="bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 hover:border-violet-300 hover:shadow-lg hover:shadow-violet-100/50 transition-all duration-200 p-4 md:p-5 group active:scale-[0.99]">
         <div className="flex items-start gap-3 md:gap-4">
           {/* Icon */}
-          <div className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-xl flex items-center justify-center ${
+          <div className={`flex-shrink-0 w-11 h-11 md:w-12 md:h-12 rounded-xl flex items-center justify-center transition-transform duration-200 group-hover:scale-110 ${
             isYes 
-              ? 'bg-gradient-to-br from-emerald-100 to-emerald-200 border-2 border-emerald-300' 
-              : 'bg-gradient-to-br from-rose-100 to-rose-200 border-2 border-rose-300'
+              ? 'bg-gradient-to-br from-emerald-100 to-emerald-200/80 border border-emerald-300/60' 
+              : 'bg-gradient-to-br from-rose-100 to-rose-200/80 border border-rose-300/60'
           }`}>
             {isYes ? (
-              <svg className="w-6 h-6 md:w-7 md:h-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
               </svg>
             ) : (
-              <svg className="w-6 h-6 md:w-7 md:h-7 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-rose-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" />
               </svg>
             )}
           </div>
@@ -222,44 +230,53 @@ function ActivityCard({ position }: { position: Position }) {
             {/* Top Row */}
             <div className="flex items-start justify-between gap-2 mb-2">
               <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
+                <div className="flex items-center gap-2 mb-1.5">
                   <span className={`px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider ${
-                    isYes ? 'bg-emerald-100 text-emerald-700' : 'bg-rose-100 text-rose-700'
+                    isYes ? 'bg-emerald-100/80 text-emerald-700' : 'bg-rose-100/80 text-rose-700'
                   }`}>
                     {position.position}
                   </span>
-                  <span className={`text-xs font-bold ${
+                  <span className={`inline-flex items-center gap-0.5 text-xs font-bold ${
                     isProfit ? 'text-emerald-600' : 'text-rose-600'
                   }`}>
+                    {isProfit ? (
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M12 7a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0V8.414l-4.293 4.293a1 1 0 01-1.414 0L8 10.414l-4.293 4.293a1 1 0 01-1.414-1.414l5-5a1 1 0 011.414 0L11 10.586 14.586 7H12z" clipRule="evenodd" />
+                      </svg>
+                    ) : (
+                      <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M12 13a1 1 0 100 2h5a1 1 0 001-1V9a1 1 0 10-2 0v2.586l-4.293-4.293a1 1 0 00-1.414 0L8 9.586 3.707 5.293a1 1 0 00-1.414 1.414l5 5a1 1 0 001.414 0L11 9.414 14.586 13H12z" clipRule="evenodd" />
+                      </svg>
+                    )}
                     {isProfit ? '+' : ''}{profitPercent.toFixed(1)}%
                   </span>
                 </div>
-                <h3 className="text-sm md:text-base font-bold text-slate-950 line-clamp-2 group-hover:text-violet-600 transition-colors leading-snug">
+                <h3 className="text-sm md:text-base font-bold text-slate-950 line-clamp-2 group-hover:text-violet-600 transition-colors duration-200 leading-snug">
                   {position.question.title}
                 </h3>
               </div>
             </div>
 
             {/* Stats Row - 4 columns */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mt-3 pt-3 border-t border-slate-100">
-              <div>
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Shares</p>
-                <p className="text-sm font-bold text-slate-950">{(position.shares || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+            <div className="grid grid-cols-4 gap-2 md:gap-3 mt-3 pt-3 border-t border-slate-100/80">
+              <div className="text-center md:text-left">
+                <p className="text-[9px] md:text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Shares</p>
+                <p className="text-xs md:text-sm font-bold text-slate-950">{(position.shares || 0).toLocaleString(undefined, { maximumFractionDigits: 1 })}</p>
               </div>
-              <div>
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Avg Cost</p>
-                <p className="text-sm font-bold text-slate-950">{avgPrice.toLocaleString(undefined, { minimumFractionDigits: 3, maximumFractionDigits: 3 })}</p>
+              <div className="text-center md:text-left">
+                <p className="text-[9px] md:text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Avg</p>
+                <p className="text-xs md:text-sm font-bold text-slate-950">{avgPrice.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
-              <div>
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">Value</p>
-                <p className="text-sm font-bold text-slate-950">{(position.current_value || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}</p>
+              <div className="text-center md:text-left">
+                <p className="text-[9px] md:text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">Value</p>
+                <p className="text-xs md:text-sm font-bold text-slate-950">{(position.current_value || 0).toLocaleString(undefined, { maximumFractionDigits: 1 })}</p>
               </div>
-              <div>
-                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-wider mb-0.5">P&L</p>
-                <p className={`text-sm font-bold ${
+              <div className="text-center md:text-left">
+                <p className="text-[9px] md:text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-0.5">P&L</p>
+                <p className={`text-xs md:text-sm font-bold ${
                   isProfit ? 'text-emerald-600' : 'text-rose-600'
                 }`}>
-                  {isProfit ? '+' : ''}{(position.profit_loss || 0).toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                  {isProfit ? '+' : ''}{(position.profit_loss || 0).toLocaleString(undefined, { maximumFractionDigits: 1 })}
                 </p>
               </div>
             </div>
