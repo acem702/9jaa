@@ -9,10 +9,11 @@ import {
   Trade, 
   Sentiment, 
   PaginationMeta,
-  TradeResult
+  TradeResult,
+  Category
 } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://10.61.144.246:8000/api/v1';
 
 interface ApiResponse<T> {
   data?: T;
@@ -59,20 +60,28 @@ class ApiService {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+      const url = `${API_BASE_URL}${endpoint}`;
+      console.log('API Request:', url); // Debug log
+      
+      const response = await fetch(url, {
         ...options,
         headers,
       });
 
-      const data = await response.json();
-
       if (!response.ok) {
-        throw new Error(data.error || data.message || 'API request failed');
+        const errorText = await response.text();
+        console.error('API Error Response:', response.status, errorText);
+        throw new Error(`API Error: ${response.status} - ${errorText}`);
       }
 
+      const data = await response.json();
       return data;
     } catch (error) {
-      console.error('API Error:', error);
+      console.error('API Request Failed:', {
+        endpoint,
+        baseUrl: API_BASE_URL,
+        error: error instanceof Error ? error.message : 'Unknown error'
+      });
       throw error;
     }
   }
@@ -111,15 +120,44 @@ class ApiService {
   }
 
   // Questions endpoints
-  async getQuestions(status?: string, page = 1) {
+  async getQuestions(
+    status?: string,
+    page = 1,
+    category?: string,
+    sort?: 'new' | 'trending' | 'volume' | 'hot' | 'controversial'
+  ) {
     const params = new URLSearchParams();
-    if (status) params.append('status', status);
+    
+    // Status filter
+    if (status && status !== 'all') {
+      params.append('status', status);
+    } else if (status === 'all') {
+      params.append('status', 'all');
+    }
+    // If no status provided, backend defaults to 'active'
+    
+    // Category filter
+    if (category && category !== 'all') {
+      params.append('category', category);
+    }
+    
+    // Sort order
+    if (sort) {
+      params.append('sort', sort);
+    }
+    
     params.append('page', page.toString());
     
     return this.request<{
       questions: Question[];
       meta: PaginationMeta;
-    }>(`/questions?${params}`);
+    }>(`/questions?${params.toString()}`);
+  }
+
+  async getCategories() {
+    return this.request<{
+      categories: Category[];
+    }>('/categories');
   }
 
   async getQuestion(id: string) {

@@ -66,9 +66,9 @@ export default function MobileBottomNav() {
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-slate-200 md:hidden z-50 safe-area-bottom">
+    <div className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-slate-200/80 md:hidden z-50 safe-area-bottom shadow-lg shadow-slate-200/20">
       {/* Active indicator bar */}
-      <div className="h-1 bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-300" 
+      <div className="h-0.5 bg-gradient-to-r from-violet-500 to-purple-500 transition-all duration-300 ease-out" 
            style={{ 
              width: '25%',
              transform: `translateX(${navItems.findIndex(item => pathname === item.href) * 100}%)`
@@ -81,22 +81,22 @@ export default function MobileBottomNav() {
             <Link 
               key={item.href}
               href={item.href} 
-              className="flex flex-col items-center gap-1 transition-all active:scale-95 relative group"
+              className="flex flex-col items-center gap-1 transition-all duration-200 active:scale-90 relative group"
             >
               {/* Active background glow */}
               {isActive && (
-                <div className="absolute inset-0 bg-violet-50 rounded-2xl -z-10 scale-110 animate-pulse" />
+                <div className="absolute inset-0 bg-violet-100/50 rounded-2xl -z-10 scale-125" />
               )}
               
-              <div className={`transition-all ${
+              <div className={`transition-all duration-200 ${
                 isActive 
-                  ? 'text-violet-600 scale-110' 
-                  : 'text-slate-400 group-hover:text-slate-600 group-hover:scale-105'
+                  ? 'text-violet-600 scale-110 drop-shadow-sm' 
+                  : 'text-slate-400 group-hover:text-slate-600 group-hover:scale-105 group-active:scale-95'
               }`}>
                 {isActive ? item.iconActive : item.icon}
               </div>
               
-              <span className={`text-[10px] font-black uppercase tracking-widest transition-all ${
+              <span className={`text-[10px] font-bold uppercase tracking-wider transition-all duration-200 ${
                 isActive ? 'text-violet-600' : 'text-slate-400 group-hover:text-slate-600'
               }`}>
                 {item.label}
@@ -104,7 +104,7 @@ export default function MobileBottomNav() {
               
               {/* Active dot indicator */}
               {isActive && (
-                <div className="absolute -top-1 w-1.5 h-1.5 bg-violet-600 rounded-full animate-bounce" />
+                <div className="absolute -top-0.5 w-1 h-1 bg-violet-500 rounded-full" />
               )}
             </Link>
           );

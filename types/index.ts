@@ -19,13 +19,23 @@ export interface Question {
     id: number;
     name: string;
   };
+  category: {
+    id: number;
+    name: string;
+    slug: string;
+  };
   market: {
     yes_price: number;
     no_price: number;
     yes_pool: number;
     no_pool: number;
+    total_volume?: number; // deprecated, use meta.total_volume
+    transaction_count?: number; // deprecated, use meta.trade_count
+  };
+  meta?: {
     total_volume?: number;
-    transaction_count?: number;
+    trade_count?: number;
+    holders_count?: number;
   };
 }
 
@@ -139,4 +149,12 @@ export interface PaginationMeta {
   last_page: number;
   per_page: number;
   total: number;
+}
+
+export interface Category {
+  id: number;
+  name: string;
+  slug: string;
+  description?: string;
+  questions_count?: number;
 }

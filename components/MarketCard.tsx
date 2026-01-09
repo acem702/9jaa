@@ -25,8 +25,8 @@ export default function MarketCard({ question }: MarketCardProps) {
   const noPool = parseFloat(question.market.no_pool?.toString() || '0');
   const totalLiquidity = yesPool + noPool;
   
-  // Use transaction_count if available, otherwise show pool-based metric
-  const transactionCount = question.market.transaction_count || 0;
+  // Use new meta.trade_count with fallback to old field for backward compatibility
+  const transactionCount = question.meta?.trade_count ?? question.market.transaction_count ?? 0;
   
   useEffect(() => {
     fetchSparklineData();
@@ -74,9 +74,9 @@ export default function MarketCard({ question }: MarketCardProps) {
 
   return (
     <Link href={`/market/${question.id}`}>
-      <div className="group relative bg-white rounded-2xl border border-slate-200 hover:border-violet-300 hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1">
+      <div className="group relative bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1 active:scale-[0.98]">
         {/* Gradient overlay on hover */}
-        <div className="absolute inset-0 bg-gradient-to-br from-violet-50/0 via-transparent to-purple-50/0 group-hover:from-violet-50/30 group-hover:to-purple-50/30 transition-all duration-500 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-br from-violet-50/0 via-transparent to-purple-50/0 group-hover:from-violet-50/40 group-hover:to-purple-50/40 transition-all duration-500 pointer-events-none" />
         
         {/* Shine effect on hover */}
         <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
@@ -201,11 +201,11 @@ export default function MarketCard({ question }: MarketCardProps) {
 
             {/* Compact Price Buttons - Fixed Width */}
             <div className="flex gap-2">
-              <div className="w-16 bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-lg p-2 border border-emerald-200 group-hover:shadow-md transition-all">
+              <div className="w-16 bg-gradient-to-br from-emerald-50 to-emerald-100/50 rounded-lg p-2 border border-emerald-200/80 group-hover:shadow-md group-hover:border-emerald-300 transition-all duration-200">
                 <div className="text-[8px] font-bold text-emerald-700 uppercase tracking-wider mb-0.5">YES</div>
                 <div className="text-base font-extrabold text-emerald-600">{yesPrice}¢</div>
               </div>
-              <div className="w-16 bg-gradient-to-br from-rose-50 to-rose-100/50 rounded-lg p-2 border border-rose-200 group-hover:shadow-md transition-all">
+              <div className="w-16 bg-gradient-to-br from-rose-50 to-rose-100/50 rounded-lg p-2 border border-rose-200/80 group-hover:shadow-md group-hover:border-rose-300 transition-all duration-200">
                 <div className="text-[8px] font-bold text-rose-700 uppercase tracking-wider mb-0.5">NO</div>
                 <div className="text-base font-extrabold text-rose-600">{noPrice}¢</div>
               </div>

@@ -2,21 +2,24 @@
 
 import { useEffect, useState } from 'react';
 import { api } from '@/lib/api';
-import { Question } from '@/types';
+import { Question, Category } from '@/types';
 import Navbar from '@/components/Navbar';
 import MarketCard from '@/components/MarketCard';
 import MobileBottomNav from '@/components/ui/MobileBottomNav';
-import LoadingSpinner from '@/components/ui/LoadingSpinner';
 import EmptyState from '@/components/ui/EmptyState';
-import SearchBar from '@/components/ui/SearchBar';
 import TabButton from '@/components/ui/TabButton';
 import SkeletonCard from '@/components/ui/SkeletonCard';
+import FilterBar from '@/components/ui/FilterBar';
 
 export default function Home() {
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('all');
+  const [activeTab, setActiveTab] = useState('active');
+  const [activeCategory, setActiveCategory] = useState('all');
+  const [sortBy, setSortBy] = useState<'new' | 'trending' | 'volume' | 'hot' | 'controversial'>('new');
+  const [showStatusTabs, setShowStatusTabs] = useState(false);
 
   // JSON-LD Structured Data
   const structuredData = {
@@ -34,15 +37,29 @@ export default function Home() {
   };
 
   useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
     fetchQuestions();
-  }, [activeTab]); // Re-fetch when tab changes
+  }, [activeTab, activeCategory, sortBy]); // Re-fetch when filters change
+
+  const fetchCategories = async () => {
+    try {
+      const { categories: data } = await api.getCategories();
+      setCategories(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error('Failed to fetch categories:', error);
+      setCategories([]);
+    }
+  };
 
   const fetchQuestions = async () => {
     try {
       setLoading(true);
-      // Pass status to API, but map 'all' to undefined
       const status = activeTab === 'all' ? undefined : activeTab;
-      const { questions: data } = await api.getQuestions(status);
+      const category = activeCategory === 'all' ? undefined : activeCategory;
+      const { questions: data } = await api.getQuestions(status, 1, category, sortBy);
       setQuestions(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error('Failed to fetch questions:', error);
@@ -115,32 +132,72 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Search Input */}
-        <SearchBar 
-          value={searchQuery}
-          onChange={setSearchQuery}
-          placeholder="Search markets..."
-        />
+        {/* Sticky Filter Section */}
+        <div className="sticky top-16 z-30 -mx-4 px-4 pb-3 bg-gradient-to-br from-slate-50/95 via-blue-50/60 to-purple-50/40 backdrop-blur-md border-b border-slate-200/50 shadow-sm">
+          {/* Category Chips - Row 1 */}
+          <div className="pt-3 pb-3">
+            <div className="flex gap-2 overflow-x-auto no-scrollbar">
+              <button
+                onClick={() => setActiveCategory('all')}
+                className={`px-4 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 active:scale-95 ${
+                  activeCategory === 'all'
+                    ? 'bg-violet-100 text-violet-700 shadow-sm'
+                    : 'text-slate-500 hover:text-violet-600 hover:bg-violet-50/50'
+                }`}
+              >
+                All
+              </button>
+              {categories.map((category) => (
+                <button
+                  key={category.slug}
+                  onClick={() => setActiveCategory(category.slug)}
+                  className={`px-4 py-1.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-all duration-200 active:scale-95 ${
+                    activeCategory === category.slug
+                      ? 'bg-violet-100 text-violet-700 shadow-sm'
+                      : 'text-slate-500 hover:text-violet-600 hover:bg-violet-50/50'
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          </div>
 
-        {/* Status Tabs */}
-        <div className="flex gap-2 mb-8 overflow-x-auto no-scrollbar pb-2">
-          {tabs.map((tab) => (
-            <TabButton
-              key={tab.id}
-              active={activeTab === tab.id}
-              onClick={() => setActiveTab(tab.id)}
-            >
-              {tab.label}
-            </TabButton>
-          ))}
+          {/* Divider */}
+          <div className="h-px bg-slate-200/70 mb-3" />
+
+          {/* Row 2: Search + Sort Icon + Filter Icon - Always one line */}
+          <FilterBar
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            sortBy={sortBy}
+            onSortChange={setSortBy}
+            showStatusTabs={showStatusTabs}
+            onToggleStatusTabs={() => setShowStatusTabs(!showStatusTabs)}
+          />
+
+          {/* Status Tabs - Collapsible with smooth animation */}
+          <div 
+            className={`overflow-hidden transition-all duration-300 ease-out ${
+              showStatusTabs ? 'max-h-20 opacity-100 mt-3' : 'max-h-0 opacity-0 mt-0'
+            }`}
+          >
+            <div className="flex gap-2 overflow-x-auto no-scrollbar pb-1">
+              {tabs.map((tab) => (
+                <TabButton
+                  key={tab.id}
+                  active={activeTab === tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                >
+                  {tab.label}
+                </TabButton>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* Results Count */}
-        {!loading && filteredQuestions.length > 0 && (
-          <div className="mb-4 text-sm font-medium text-slate-600">
-            {filteredQuestions.length} {filteredQuestions.length === 1 ? 'market' : 'markets'} found
-          </div>
-        )}
+        {/* Spacer for sticky section */}
+        <div className="h-4" />
 
         {/* Markets Grid - Responsive Layout */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
