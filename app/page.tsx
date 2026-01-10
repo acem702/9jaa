@@ -15,6 +15,9 @@ export default function Home() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState('');
   const [activeTab, setActiveTab] = useState('active');
   const [activeCategory, setActiveCategory] = useState('all');
@@ -41,7 +44,29 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    fetchQuestions();
+    // Fetch additional pages when currentPage changes (after the first page)
+    if (currentPage > 1) {
+      fetchQuestions(currentPage, true); // Append to existing questions
+    }
+  }, [currentPage]);
+
+  // Handle scroll event for infinite scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      // Check if user has scrolled near the bottom
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800 && 
+          !loadingMore && hasMore) {
+        setCurrentPage(prev => prev + 1);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [loadingMore, hasMore]);
+
+  useEffect(() => {
+    fetchQuestions(1, false); // Fetch first page
+    setCurrentPage(1); // Reset to first page when filters change
   }, [activeTab, activeCategory, sortBy]); // Re-fetch when filters change
 
   const fetchCategories = async () => {
@@ -54,18 +79,37 @@ export default function Home() {
     }
   };
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = async (page = 1, append = false) => {
     try {
-      setLoading(true);
+      if (page === 1) {
+        setLoading(true);
+      } else {
+        setLoadingMore(true);
+      }
+      
       const status = activeTab === 'all' ? undefined : activeTab;
       const category = activeCategory === 'all' ? undefined : activeCategory;
-      const { questions: data } = await api.getQuestions(status, 1, category, sortBy);
-      setQuestions(Array.isArray(data) ? data : []);
+      const { questions: data, meta } = await api.getQuestions(status, page, category, sortBy);
+      
+      if (append) {
+        setQuestions(prev => [...prev, ...data]);
+      } else {
+        setQuestions(data);
+      }
+      
+      // Check if there are more pages
+      setHasMore(meta && meta.current_page < meta.last_page);
     } catch (error) {
       console.error('Failed to fetch questions:', error);
-      setQuestions([]);
+      if (!append) {
+        setQuestions([]);
+      }
     } finally {
-      setLoading(false);
+      if (page === 1) {
+        setLoading(false);
+      } else {
+        setLoadingMore(false);
+      }
     }
   };
 
@@ -214,6 +258,22 @@ export default function Home() {
             filteredQuestions.map((question) => (
               <MarketCard key={question.id} question={question} />
             ))
+          )}
+          
+          {/* Loading indicator for infinite scroll */}
+          {loadingMore && (
+            <div className="col-span-full flex justify-center py-6">
+              {Array.from({ length: 3 }).map((_, i) => (
+                <SkeletonCard key={`loading-${i}`} />
+              ))}
+            </div>
+          )}
+          
+          {/* End of results message */}
+          {!loading && !loadingMore && hasMore === false && filteredQuestions.length > 0 && (
+            <div className="col-span-full text-center py-6 text-slate-500 font-medium">
+              You've reached the end of the results
+            </div>
           )}
         </div>
       </main>

@@ -341,9 +341,33 @@ export default function MarketDetail() {
                 </h1>
 
                 {/* Short Description */}
-                <p className="text-slate-600 text-base leading-relaxed mb-6 font-medium">
+                {/* <p className="text-slate-600 text-base leading-relaxed mb-6 font-medium">
                   {question.description}
-                </p>
+                </p> */}
+                
+                {/* Resolution Notes - shown only when resolved */}
+                {question.status === 'resolved' && question.notes && (
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-2xl p-4 border border-amber-100/80 mb-6">
+                    <div className="flex items-start gap-3">
+                      <div className="flex-shrink-0 mt-0.5 text-amber-600">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </div>
+                      <div className="text-slate-700 text-sm leading-relaxed font-medium">
+                        <div className="font-bold text-amber-700 text-sm mb-1">Resolution Notes:</div>
+                        <div 
+                          className="prose prose-slate max-w-none break-words"
+                          dangerouslySetInnerHTML={{ 
+                            __html: question.notes 
+                              .replace(/\n/g, '<br>')
+                              .replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" class="text-violet-600 hover:underline" target="_blank" rel="noopener noreferrer">$1</a>')
+                          }}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Sentiment Summary - Big Number */}
                 <div className="bg-gradient-to-br from-violet-50 to-purple-50 rounded-2xl p-6 border border-violet-100/80 hover:shadow-md transition-shadow duration-200">

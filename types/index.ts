@@ -15,6 +15,7 @@ export interface Question {
   created_at: string;
   locked_at: string | null;
   resolved_at: string | null;
+  notes?: string | null;
   creator: {
     id: number;
     name: string;
