@@ -5,10 +5,6 @@ const nextConfig: NextConfig = {
     'localhost',
     '127.0.0.1',
     '10.61.144.246',
-    '*.replit.dev',
-    '*.repl.co',
-    '*.replit.app',
-    '*.picard.replit.dev',
   ],
 };
 
