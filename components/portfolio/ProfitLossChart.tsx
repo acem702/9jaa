@@ -109,66 +109,18 @@ export default function ProfitLossChart({ positions }: ProfitLossChartProps) {
         </div>
       </div>
 
-      {/* Chart */}
+      {/* Chart - commented out until better recording method is found */}
       <div className="p-4 md:p-6">
-        {chartData.length === 0 ? (
-          <div className="h-64 flex items-center justify-center text-slate-400">
-            <div className="text-center">
-              <svg className="w-12 md:w-16 h-12 md:h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-              <p className="font-bold text-sm md:text-base">No performance data yet</p>
-              <p className="text-xs md:text-sm mt-1">Start expressing opinions to see your chart</p>
-            </div>
+        {/* Chart would go here */}
+        <div className="h-64 flex items-center justify-center text-slate-400">
+          <div className="text-center">
+            <svg className="w-12 md:w-16 h-12 md:h-16 mx-auto mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+            </svg>
+            <p className="font-bold text-sm md:text-base">Chart coming soon</p>
+            <p className="text-xs md:text-sm mt-1">Historical data tracking will be available soon</p>
           </div>
-        ) : (
-          <ResponsiveContainer width="100%" height={300}>
-            <AreaChart data={chartData} margin={{ top: 10, right: 5, left: -20, bottom: 0 }}>
-              <defs>
-                <linearGradient id="colorPnl" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#7c3aed" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#7c3aed" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" vertical={false} />
-              <XAxis 
-                dataKey="date" 
-                stroke="#94a3b8"
-                tick={{ fill: '#64748b', fontSize: 12 }}
-                tickLine={false}
-                axisLine={{ stroke: '#e2e8f0' }}
-              />
-              <YAxis 
-                stroke="#94a3b8"
-                tick={{ fill: '#64748b', fontSize: 12 }}
-                tickLine={false}
-                axisLine={{ stroke: '#e2e8f0' }}
-                tickFormatter={(value: number) => `${value >= 0 ? '+' : ''}${value.toFixed(0)}`}
-              />
-              <Tooltip 
-                contentStyle={{
-                  backgroundColor: '#ffffff',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  padding: '12px',
-                  boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)'
-                }}
-                labelStyle={{ color: '#0f172a', fontWeight: 600, fontSize: '12px' }}
-                formatter={(value: number | undefined) => [
-                  `${(value || 0) >= 0 ? '+' : ''}${(value || 0).toFixed(2)} credits`,
-                  'Cumulative P&L'
-                ]}
-              />
-              <Area 
-                type="monotone" 
-                dataKey="cumulative" 
-                stroke="#7c3aed" 
-                strokeWidth={3}
-                fill="url(#colorPnl)" 
-              />
-            </AreaChart>
-          </ResponsiveContainer>
-        )}
+        </div>
       </div>
     </div>
   );

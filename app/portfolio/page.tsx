@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Head from 'next/head';
 import { api } from '@/lib/api';
-import { Position } from '@/types';
+import { Position, PortfolioSummary } from '@/types';
 import { useAuth } from '@/contexts/AuthContext';
 import { ProtectedRoute } from '@/components/ProtectedRoute';
 import Navbar from '@/components/Navbar';
@@ -15,30 +15,31 @@ import PositionsList from '@/components/portfolio/PositionsList';
 
 function PortfolioPage() {
   const { user } = useAuth();
-  const [positions, setPositions] = useState<Position[]>([]);
+  const [portfolioData, setPortfolioData] = useState<PortfolioSummary | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPositions();
+    fetchPortfolioData();
   }, []);
 
-  const fetchPositions = async () => {
+  const fetchPortfolioData = async () => {
     try {
       setLoading(true);
-      const { positions: data } = await api.getPositions();
-      setPositions(data);
+      const data = await api.getPortfolioSummary();
+      setPortfolioData(data);
     } catch (error) {
-      console.error('Failed to fetch positions:', error);
+      console.error('Failed to fetch portfolio data:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Calculate portfolio metrics
-  const totalInvested = positions.reduce((sum, p) => sum + (p.cost || 0), 0);
-  const totalValue = positions.reduce((sum, p) => sum + (p.current_value || 0), 0);
-  const totalPnL = totalValue - totalInvested;
-  const totalPnLPercent = totalInvested > 0 ? (totalPnL / totalInvested) * 100 : 0;
+  // Use portfolio metrics from backend
+  const totalInvested = portfolioData?.portfolio.total_invested || 0;
+  const totalValue = portfolioData?.portfolio.total_value || 0;
+  const totalPnL = portfolioData?.portfolio.total_pnl || 0;
+  const totalPnLPercent = portfolioData?.portfolio.total_pnl_percent || 0;
+  const positions = portfolioData?.positions || [];
 
   if (loading) {
     return (

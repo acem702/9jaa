@@ -10,7 +10,8 @@ import {
   Sentiment, 
   PaginationMeta,
   TradeResult,
-  Category
+  Category,
+  PortfolioSummary
 } from '@/types';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://10.61.144.246:8000/api/v1';
@@ -188,6 +189,10 @@ class ApiService {
 
   async getPositions() {
     return this.request<{ positions: Position[] }>('/trade/positions');
+  }
+
+  async getPortfolioSummary() {
+    return this.request<PortfolioSummary>('/trade/portfolio-summary');
   }
 
   // Chart endpoints

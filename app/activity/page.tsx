@@ -57,11 +57,34 @@ function ActivityPage() {
     }
   });
 
-  // Group by date (mock - in real app, use actual transaction dates)
+  // Helper function to format date as "Today", "Yesterday", or "Month Day, Year"
+  const formatDateLabel = (dateString: string) => {
+    const date = new Date(dateString);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    // Set time to 00:00:00 for comparison
+    today.setHours(0, 0, 0, 0);
+    yesterday.setHours(0, 0, 0, 0);
+    date.setHours(0, 0, 0, 0);
+    
+    if (date.getTime() === today.getTime()) {
+      return 'Today';
+    } else if (date.getTime() === yesterday.getTime()) {
+      return 'Yesterday';
+    } else {
+      return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+  };
+
+  // Group by date using actual created_at field
   const groupedByDate = sortedPositions.reduce((acc, position) => {
-    const date = 'Today'; // In real app: format position.created_at
-    if (!acc[date]) acc[date] = [];
-    acc[date].push(position);
+    if (position.created_at) {
+      const date = formatDateLabel(position.created_at);
+      if (!acc[date]) acc[date] = [];
+      acc[date].push(position);
+    }
     return acc;
   }, {} as Record<string, Position[]>);
 

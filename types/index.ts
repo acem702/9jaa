@@ -45,13 +45,29 @@ export interface Position {
     id: number;
     title: string;
     status: string;
+    resolution: boolean | null;
+    resolved_at?: string;
   };
   position: string; // 'YES' or 'NO'
+  position_bool: boolean;
   shares: number;
   cost: number;
   current_value: number;
   profit_loss: number;
   profit_loss_pct: number;
+  current_price: number;
+  created_at: string; // ISO date string
+}
+
+export interface PortfolioSummary {
+  portfolio: {
+    total_invested: number;
+    total_value: number;
+    total_pnl: number;
+    total_pnl_percent: number;
+  };
+  positions: Position[];
+  chart_data: any[]; // Will be implemented later
 }
 
 export interface Trade {
