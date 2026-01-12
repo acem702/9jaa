@@ -71,9 +71,27 @@ class ApiService {
       });
 
       if (!response.ok) {
-        const errorText = await response.text();
-        console.error('API Error Response:', response.status, errorText);
-        throw new Error(`API Error: ${response.status} - ${errorText}`);
+        let errorMessage = `HTTP Error: ${response.status}`;
+        let errorData = null;
+        
+        try {
+          // Try to parse as JSON first to get structured error
+          errorData = await response.json();
+          errorMessage = errorData.message || errorData.error || `Error ${response.status}: ${response.statusText}`;
+        } catch (e) {
+          // If JSON parsing fails, fall back to text
+          const errorText = await response.text();
+          errorMessage = errorText || `Error ${response.status}: ${response.statusText}`;
+        }
+        
+        console.error('API Error Response:', {
+          status: response.status,
+          statusText: response.statusText,
+          message: errorMessage,
+          errorData
+        });
+        
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -84,7 +102,20 @@ class ApiService {
         baseUrl: API_BASE_URL,
         error: error instanceof Error ? error.message : 'Unknown error'
       });
-      throw error;
+      
+      // Handle different types of errors
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        // Network error
+        throw new Error('Network error occurred. Please check your connection and try again.');
+      }
+      
+      if (error instanceof Error) {
+        // Re-throw the error as-is if it's already been formatted in the response handling
+        throw error;
+      }
+      
+      // Fallback for unknown errors
+      throw new Error('An unexpected error occurred. Please try again.');
     }
   }
 
