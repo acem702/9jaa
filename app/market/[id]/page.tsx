@@ -427,25 +427,25 @@ export default function MarketDetail() {
                 <StatCard 
                   icon={<VolumeIcon />}
                   label="Total Volume"
-                  value={stats.total_volume.toLocaleString()}
+                  value={formatNumber(stats.total_volume)}
                   subtitle="credits traded"
                 />
                 <StatCard 
                   icon={<TradesIcon />}
                   label="Trades"
-                  value={stats.total_trades.toLocaleString()}
+                  value={formatNumber(stats.total_trades)}
                   subtitle="transactions"
                 />
                 <StatCard 
                   icon={<HoldersIcon />}
                   label="Participants"
-                  value={stats.unique_traders.toLocaleString()}
+                  value={formatNumber(stats.unique_traders)}
                   subtitle="users"
                 />
                 <StatCard 
                   icon={<LiquidityIcon />}
                   label="Liquidity"
-                  value={Math.round(stats.liquidity.total).toLocaleString()}
+                  value={formatNumber(Math.round(stats.liquidity.total))}
                   subtitle="pool depth"
                 />
               </div>
@@ -465,6 +465,20 @@ export default function MarketDetail() {
       <MobileBottomNav />
     </div>
   );
+}
+
+// Utility function to format large numbers
+function formatNumber(num: number): string {
+  if (num >= 1_000_000_000) {
+    return (num / 1_000_000_000).toFixed(1).replace(/\.?0+$/, '') + 'b';
+  }
+  if (num >= 1_000_000) {
+    return (num / 1_000_000).toFixed(1).replace(/\.?0+$/, '') + 'm';
+  }
+  if (num >= 1_000) {
+    return (num / 1_000).toFixed(1).replace(/\.?0+$/, '') + 'k';
+  }
+  return num.toString();
 }
 
 // Stat Card Component

@@ -14,7 +14,7 @@ import {
   PortfolioSummary
 } from '@/types';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://10.61.144.246:8000/api/v1';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api/v1';
 
 interface ApiResponse<T> {
   data?: T;
@@ -67,6 +67,7 @@ class ApiService {
       const response = await fetch(url, {
         ...options,
         headers,
+        credentials: 'include',
       });
 
       if (!response.ok) {

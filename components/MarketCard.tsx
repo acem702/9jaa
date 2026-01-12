@@ -89,6 +89,13 @@ export default function MarketCard({ question }: MarketCardProps) {
             <div className="flex items-center gap-2 flex-wrap">
               <StatusBadge status={question.status} variant="status" />
               
+              {/* Category Badge */}
+              {question.category && (
+                <span className="px-2 py-0.5 bg-violet-100 text-violet-700 text-[9px] font-bold rounded-full border border-violet-200/80">
+                  {question.category.name}
+                </span>
+              )}
+              
               {/* Trend Indicator */}
               {sparklineData.length > 0 && (
                 <div className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-bold ${
