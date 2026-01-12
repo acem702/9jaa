@@ -15,23 +15,45 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
   const router = useRouter();
   const { user, refetchUser } = useAuth();
   const [selectedPosition, setSelectedPosition] = useState<'YES' | 'NO'>('YES');
-  const [amount, setAmount] = useState('');
+  const [commitAmount, setCommitAmount] = useState(''); // Amount of credits user wants to commit
+  const [shares, setShares] = useState<number | null>(null); // Calculated number of shares
   const [quote, setQuote] = useState<TradeQuote | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const isActive = question.status === 'active';
   const position = selectedPosition === 'YES';
+  
+  // Calculate shares based on current price and desired commitment amount
+  const calculateShares = (commitAmount: number, pricePerShare: number): number => {
+    if (pricePerShare <= 0) return 0;
+    return Math.floor(commitAmount / pricePerShare);
+  };
 
   const handleGetQuote = async () => {
-    if (!amount || parseFloat(amount) <= 0) return;
+    if (!commitAmount || parseFloat(commitAmount) <= 0) return;
     
     try {
       setError('');
-      const quoteData = await api.getQuote(question.id.toString(), position, parseFloat(amount));
+      const pricePerShare = position ? question.market.yes_price : question.market.no_price;
+      const calculatedShares = calculateShares(parseFloat(commitAmount), pricePerShare);
+      
+      if (calculatedShares <= 0) {
+        setError('Amount too small - cannot buy any shares');
+        setQuote(null);
+        setShares(null);
+        return;
+      }
+      
+      setShares(calculatedShares);
+      
+      // Get quote based on calculated shares
+      const quoteData = await api.getQuote(question.id.toString(), position, calculatedShares);
       setQuote(quoteData);
     } catch (err: any) {
       setError(err.message);
+      setQuote(null);
+      setShares(null);
     }
   };
 
@@ -41,8 +63,13 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
       return;
     }
 
-    if (!amount || parseFloat(amount) <= 0) {
-      setError('Please enter a valid amount');
+    if (!commitAmount || parseFloat(commitAmount) <= 0) {
+      setError('Please enter a valid amount to commit');
+      return;
+    }
+
+    if (!shares || shares <= 0) {
+      setError('Cannot buy zero or negative shares');
       return;
     }
 
@@ -50,9 +77,10 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
       setLoading(true);
       setError('');
       
-      await api.buyShares(question.id.toString(), position, parseFloat(amount));
+      await api.buyShares(question.id.toString(), position, shares);
       
-      setAmount('');
+      setCommitAmount('');
+      setShares(null);
       setQuote(null);
       await refetchUser();
       onTradeComplete();
@@ -68,7 +96,7 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
 
   // Calculate estimated probability after trade
   const estimatedNewPrice = quote ? Math.round(quote.price_per_share * 100) : yesPrice;
-  const potentialReturn = quote && parseFloat(amount) > 0 ? parseFloat(amount) - quote.cost : 0;
+  const potentialReturn = quote && shares ? shares - quote.cost : 0;
 
   return (
     <div className="bg-white rounded-2xl border-2 border-slate-200 shadow-xl overflow-hidden">
@@ -153,9 +181,9 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
           <div className="relative">
             <input
               type="number"
-              value={amount}
+              value={commitAmount}
               onChange={(e) => {
-                setAmount(e.target.value);
+                setCommitAmount(e.target.value);
                 setQuote(null);
               }}
               onBlur={handleGetQuote}
@@ -170,7 +198,7 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
         </div>
 
         {/* Prediction Summary */}
-        {quote && parseFloat(amount) > 0 && (
+        {quote && parseFloat(commitAmount) > 0 && (
           <div className="mb-6 p-5 bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl border-2 border-slate-200">
             <div className="space-y-3">
               <div>
@@ -186,21 +214,25 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
               </div>
 
               <div className="pt-3 border-t border-slate-200">
-                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">If you're right:</p>
+                <p className="text-xs text-slate-500 font-bold uppercase tracking-wider mb-2">Transaction Details:</p>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 font-medium">You invested</span>
+                  <span className="text-sm text-slate-600 font-medium">You'll spend</span>
                   <span className="text-sm font-bold text-slate-900">{quote.cost.toFixed(2)} credits</span>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 font-medium">You'll receive</span>
-                  <span className="text-sm font-bold text-emerald-600">{parseFloat(amount).toFixed(2)} credits</span>
+                  <span className="text-sm text-slate-600 font-medium">You'll get</span>
+                  <span className="text-sm font-bold text-emerald-600">{shares} shares</span>
                 </div>
                 <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-200">
-                  <span className="text-sm text-slate-700 font-bold">Potential return</span>
-                  <span className={`text-lg font-black ${
-                    potentialReturn > 0 ? 'text-emerald-600' : 'text-rose-600'
-                  }`}>
-                    {potentialReturn > 0 ? '+' : ''}{potentialReturn.toFixed(2)}
+                  <span className="text-sm text-slate-700 font-bold">If {selectedPosition} happens:</span>
+                  <span className="text-lg font-black text-emerald-600">
+                    +{(shares! - quote.cost).toFixed(2)} cr
+                  </span>
+                </div>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-slate-700 font-bold">If {selectedPosition === 'YES' ? 'NO' : 'YES'} happens:</span>
+                  <span className="text-lg font-black text-rose-600">
+                    -{quote.cost.toFixed(2)} cr
                   </span>
                 </div>
               </div>
@@ -228,9 +260,9 @@ export default function TradePanel({ question, onTradeComplete }: TradePanelProp
         {/* Submit Button */}
         <button
           onClick={handleSubmit}
-          disabled={!isActive || loading || !amount || parseFloat(amount) <= 0}
+          disabled={!isActive || loading || !commitAmount || parseFloat(commitAmount) <= 0}
           className={`w-full py-5 rounded-xl font-black text-lg transition-all transform active:scale-95 ${
-            !isActive || loading || !amount || parseFloat(amount) <= 0
+            !isActive || loading || !commitAmount || parseFloat(commitAmount) <= 0
               ? 'bg-slate-200 text-slate-400 cursor-not-allowed'
               : selectedPosition === 'YES'
               ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-600 hover:to-emerald-700 text-white shadow-lg shadow-emerald-200 hover:shadow-xl'
