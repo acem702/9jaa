@@ -157,7 +157,14 @@ export default function Home() {
                       : 'text-slate-500 hover:text-violet-600 hover:bg-violet-50/50'
                   }`}
                 >
-                  {category.name}
+                  <div className="flex items-center gap-2">
+                    <span>{category.name}</span>
+                    {category.questions_count !== undefined && (
+                      <span className="bg-slate-200 text-slate-700 text-xs font-bold px-2 py-0.5 rounded-full">
+                        {category.questions_count}
+                      </span>
+                    )}
+                  </div>
                 </button>
               ))}
             </div>

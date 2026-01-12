@@ -72,6 +72,10 @@ export default function MarketCard({ question }: MarketCardProps) {
     ? sparklineData[sparklineData.length - 1].value - sparklineData[0].value 
     : 0;
 
+  const getCategoryName = (name: string) => {
+    return name.length > 3 ? name.substring(0, 3) + '..' : name;
+  };
+
   return (
     <Link href={`/market/${question.id}`}>
       <div className="group relative bg-white/90 backdrop-blur-sm rounded-2xl border border-slate-200/80 hover:border-violet-300 hover:shadow-xl hover:shadow-violet-500/10 transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1 active:scale-[0.98]">
@@ -92,7 +96,8 @@ export default function MarketCard({ question }: MarketCardProps) {
               {/* Category Badge */}
               {question.category && (
                 <span className="px-2 py-0.5 bg-violet-100 text-violet-700 text-[9px] font-bold rounded-full border border-violet-200/80">
-                  {question.category.name}
+                  <span className="hidden sm:inline">{question.category.name}</span>
+                  <span className="inline sm:hidden">{getCategoryName(question.category.name)}</span>
                 </span>
               )}
               
