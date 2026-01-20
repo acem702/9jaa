@@ -91,7 +91,7 @@ function ActivityPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <Head>
-        <title>Activity - 9ja Markets</title>
+        <title>Activity - FOREKAST</title>
         <meta name="description" content="View your recent market transactions and trading activity" />
       </Head>
 

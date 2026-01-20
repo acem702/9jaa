@@ -8,8 +8,8 @@ export default function AboutPage() {
       <Navbar />
       <main className="max-w-4xl mx-auto px-4 py-12 pb-32">
         <PageHeader 
-          title="About 9ja Markets" 
-          subtitle="Empowering Nigerians through political forecasting and collective wisdom." 
+          title="About FOREKAST" 
+          subtitle="Empowering people through collective wisdom and professional forecasting." 
         />
 
         <div className="bg-white/90 backdrop-blur-sm rounded-3xl border border-slate-200/80 shadow-xl overflow-hidden">
@@ -17,7 +17,7 @@ export default function AboutPage() {
             <section>
               <h2 className="text-2xl font-black text-slate-900 mb-4">Our Mission</h2>
               <p className="text-slate-600 leading-relaxed font-medium">
-                9ja Markets is Nigeria's premier political prediction platform. Our mission is to provide a transparent, data-driven space where citizens can express their opinions on political outcomes and track the pulse of the nation in real-time.
+                FOREKAST is a premier prediction platform. Our mission is to provide a transparent, data-driven space where participants can express their opinions on various outcomes and track real-time sentiment.
               </p>
             </section>
 
@@ -31,7 +31,7 @@ export default function AboutPage() {
               <div className="space-y-4">
                 <h3 className="text-xl font-bold text-purple-600">Transparency First</h3>
                 <p className="text-slate-600 leading-relaxed text-sm font-medium">
-                  Every trade and price movement is recorded on our platform. We believe in providing open access to political sentiment data for all Nigerians.
+                  Every trade and price movement is recorded on our platform. We believe in providing open access to sentiment data for all.
                 </p>
               </div>
             </section>
@@ -40,7 +40,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-black text-slate-900 mb-4">How it Works</h2>
               <div className="space-y-4 text-slate-600 font-medium">
                 <p>
-                  Participants use <strong>Influence Credits</strong> to buy shares in YES or NO outcomes for specific political events. As more people trade, the price reflects the aggregate probability of that event occurring.
+                  Participants use <strong>Influence Credits</strong> to buy shares in YES or NO outcomes for specific events. As more people trade, the price reflects the aggregate probability of that event occurring.
                 </p>
                 <p>
                   If your prediction is correct, your shares are resolved at 100% value. If incorrect, they resolve at 0%. Your success builds your standing on our global leaderboard.
@@ -51,7 +51,7 @@ export default function AboutPage() {
             <section>
               <h2 className="text-2xl font-black text-slate-900 mb-4">Non-Partisan Platform</h2>
               <p className="text-slate-600 leading-relaxed font-medium">
-                9ja Markets is strictly non-partisan. We do not endorse candidates or parties. Our goal is solely to provide a platform for sentiment analysis and forecasting. We believe that by quantifying political belief, we can foster a more informed and engaged electorate.
+                FOREKAST is strictly non-partisan. We do not endorse candidates or parties. Our goal is solely to provide a platform for sentiment analysis and forecasting. We believe that by quantifying belief, we can foster a more informed and engaged public.
               </p>
             </section>
           </div>

@@ -132,7 +132,7 @@ export default function Leaderboard() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20">
       <Head>
-        <title>Leaderboard - 9ja Markets</title>
+        <title>Leaderboard - FOREKAST</title>
         <meta name="description" content="Top performing political analysts and traders. See who's leading in volume, profit, and accuracy." />
       </Head>
 

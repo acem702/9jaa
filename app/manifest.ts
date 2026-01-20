@@ -2,21 +2,16 @@ import { MetadataRoute } from 'next';
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: '9ja Markets - Political Prediction Platform',
-    short_name: '9ja Markets',
-    description: 'Express your opinions on Nigerian political outcomes. Trade prediction markets, track your portfolio, and compete on the leaderboard.',
+    name: 'FOREKAST - Professional Prediction Markets',
+    short_name: 'FOREKAST',
+    description: 'Express your opinions on global events and market outcomes. Trade prediction markets, track your portfolio, and compete on the leaderboard with FOREKAST.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
-    theme_color: '#2563eb',
+    theme_color: '#7c3aed',
     icons: [
       {
-        src: '/icon-192.png',
-        sizes: '192x192',
-        type: 'image/png',
-      },
-      {
-        src: '/icon-512.png',
+        src: '/mobile-logo.png',
         sizes: '512x512',
         type: 'image/png',
       },

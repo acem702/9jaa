@@ -15,47 +15,47 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "9ja Markets - Political Prediction Platform",
-    template: "%s | 9ja Markets"
+    default: "FOREKAST - Professional Prediction Markets",
+    template: "%s | FOREKAST"
   },
-  description: "Express your opinions on Nigerian political outcomes. Trade prediction markets, track your portfolio, and compete on the leaderboard.",
-  keywords: ["political predictions", "prediction markets", "Nigeria", "9ja", "trading", "politics", "forecasting", "opinion markets"],
-  authors: [{ name: "9ja Markets" }],
-  creator: "9ja Markets",
-  publisher: "9ja Markets",
-  metadataBase: new URL('https://9jamarkets.com'),
-  applicationName: "9ja Markets",
+  description: "Express your opinions on global events and market outcomes. Trade prediction markets, track your portfolio, and compete on the leaderboard with FOREKAST.",
+  keywords: ["FOREKAST", "prediction markets", "trading", "forecasting", "opinion markets", "sentiment analysis"],
+  authors: [{ name: "FOREKAST" }],
+  creator: "FOREKAST",
+  publisher: "FOREKAST",
+  metadataBase: new URL('https://forekast.io'),
+  applicationName: "FOREKAST",
   manifest: '/manifest.json',
   icons: {
     icon: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/mobile-logo.png', type: 'image/png' },
     ],
     apple: [
-      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/mobile-logo.png', type: 'image/png' },
     ],
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://9jamarkets.com",
-    siteName: "9ja Markets",
-    title: "9ja Markets - Political Prediction Platform",
-    description: "Express your opinions on Nigerian political outcomes and compete with others",
+    url: "https://forekast.io",
+    siteName: "FOREKAST",
+    title: "FOREKAST - Professional Prediction Markets",
+    description: "Express your opinions on global events and market outcomes",
     images: [
       {
-        url: "/og-image.svg",
-        width: 1200,
-        height: 630,
-        alt: "9ja Markets - Political Prediction Platform",
-        type: "image/svg+xml",
+        url: "/mobile-logo.png",
+        width: 512,
+        height: 512,
+        alt: "FOREKAST Logo",
+        type: "image/png",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "9ja Markets - Political Prediction Platform",
-    description: "Express your opinions on Nigerian political outcomes",
-    images: ["/og-image.svg"],
+    title: "FOREKAST - Professional Prediction Markets",
+    description: "Express your opinions on global events and market outcomes",
+    images: ["/mobile-logo.png"],
   },
   robots: {
     index: true,
@@ -73,7 +73,7 @@ export const metadata: Metadata = {
     // yandex: 'your-yandex-verification-code',
   },
   alternates: {
-    canonical: 'https://9jamarkets.com',
+    canonical: 'https://forekast.io',
   },
   category: 'politics',
   viewport: {

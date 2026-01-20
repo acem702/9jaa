@@ -45,9 +45,9 @@ function PortfolioPage() {
     return (
       <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <Head>
-        <title>Portfolio - 9ja Markets</title>
+        <title>Portfolio - FOREKAST</title>
         <meta name="description" content="Track your prediction performance, view your positions, and monitor your profit & loss across all markets." />
-        <meta name="keywords" content="portfolio, trading performance, profit loss, positions, 9ja markets" />
+        <meta name="keywords" content="portfolio, trading performance, profit loss, positions, FOREKAST" />
       </Head>
         <Navbar />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32">
@@ -63,7 +63,7 @@ function PortfolioPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100">
       <Head>
-        <title>Portfolio - 9ja Markets</title>
+        <title>Portfolio - FOREKAST</title>
         <meta name="description" content="Track your prediction performance, view positions, and analyze your profit & loss over time." />
       </Head>
 

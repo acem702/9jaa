@@ -50,7 +50,7 @@ export default function PrivacyPage() {
           <section>
             <h2 className="text-xl font-black text-slate-900 mb-4">5. Contact Us</h2>
             <p className="text-slate-600 font-medium leading-relaxed">
-              If you have any questions about this Privacy Policy, please contact us at support@9jamarkets.com.
+              If you have any questions about this Privacy Policy, please contact us at support@forekast.io.
             </p>
           </section>
         </div>

@@ -6,7 +6,7 @@ export default function FAQPage() {
   const faqs = [
     {
       question: "What are Influence Credits?",
-      answer: "Influence Credits are the virtual currency used on 9ja Markets. They have no real-world monetary value and are used to represent the weight of your predictions in the market."
+      answer: "Influence Credits are the virtual currency used on FOREKAST. They have no real-world monetary value and are used to represent the weight of your predictions in the market."
     },
     {
       question: "How do I earn more credits?",
@@ -14,7 +14,7 @@ export default function FAQPage() {
     },
     {
       question: "Is this gambling?",
-      answer: "No. 9ja Markets is a prediction platform used for sentiment analysis and collective forecasting. Since Influence Credits cannot be bought with or exchanged for real money, it does not constitute gambling."
+      answer: "No. FOREKAST is a prediction platform used for sentiment analysis and collective forecasting. Since Influence Credits cannot be bought with or exchanged for real money, it does not constitute gambling."
     },
     {
       question: "How are markets resolved?",
@@ -28,7 +28,7 @@ export default function FAQPage() {
       <main className="max-w-4xl mx-auto px-4 py-12 pb-32">
         <PageHeader 
           title="Frequently Asked Questions" 
-          subtitle="Everything you need to know about 9ja Markets." 
+          subtitle="Everything you need to know about FOREKAST." 
         />
 
         <div className="space-y-4">

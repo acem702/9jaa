@@ -28,7 +28,7 @@ async function getMarkets(): Promise<Question[]> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://9jamarkets.com';
+  const baseUrl = 'https://forekast.io';
   const currentDate = new Date();
 
   // Fetch all markets dynamically

@@ -16,7 +16,7 @@ export default function TermsPage() {
           <section className="mb-10">
             <h2 className="text-xl font-black text-slate-900 mb-4">1. Acceptance of Terms</h2>
             <p className="text-slate-600 font-medium leading-relaxed">
-              By accessing or using 9ja Markets, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
+              By accessing or using FOREKAST, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our services.
             </p>
           </section>
 
@@ -30,7 +30,7 @@ export default function TermsPage() {
           <section className="mb-10">
             <h2 className="text-xl font-black text-slate-900 mb-4">3. Nature of Platform</h2>
             <p className="text-slate-600 font-medium leading-relaxed">
-              9ja Markets is an informational prediction platform. <strong>Influence Credits</strong> have no real-world monetary value and cannot be exchanged for currency. The platform is for entertainment and sentiment analysis purposes only.
+              FOREKAST is an informational prediction platform. <strong>Influence Credits</strong> have no real-world monetary value and cannot be exchanged for currency. The platform is for entertainment and sentiment analysis purposes only.
             </p>
           </section>
 
@@ -50,14 +50,14 @@ export default function TermsPage() {
           <section className="mb-10">
             <h2 className="text-xl font-black text-slate-900 mb-4">5. Disclaimer of Warranty</h2>
             <p className="text-slate-600 font-medium leading-relaxed">
-              The services are provided "as is" without warranty of any kind. 9ja Markets does not guarantee the accuracy of predictions or market data.
+              The services are provided "as is" without warranty of any kind. FOREKAST does not guarantee the accuracy of predictions or market data.
             </p>
           </section>
 
           <section>
             <h2 className="text-xl font-black text-slate-900 mb-4">6. Limitation of Liability</h2>
             <p className="text-slate-600 font-medium leading-relaxed">
-              9ja Markets shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the platform.
+              FOREKAST shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of the platform.
             </p>
           </section>
         </div>

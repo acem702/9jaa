@@ -9,7 +9,7 @@ export default function HowToPage() {
       <main className="max-w-4xl mx-auto px-4 py-12 pb-32">
         <PageHeader 
           title="How to Participate" 
-          subtitle="A step-by-step guide to predicting political outcomes on 9ja Markets." 
+          subtitle="A step-by-step guide to predicting outcomes on FOREKAST." 
         />
 
         <div className="space-y-6">
@@ -37,7 +37,7 @@ export default function HowToPage() {
               <div>
                 <h2 className="text-2xl font-black text-slate-900 mb-4">Explore Markets</h2>
                 <p className="text-slate-600 leading-relaxed font-medium">
-                  Browse through active markets covering elections, policy decisions, and political appointments. Each market displays the current "Sentiment" (price) representing the community's prediction.
+                  Browse through active markets covering global events, economic indicators, and policy decisions. Each market displays the current "Sentiment" (price) representing the community's prediction.
                 </p>
               </div>
             </div>

@@ -111,15 +111,15 @@ export default function MarketDetail() {
     },
     publisher: {
       '@type': 'Organization',
-      name: '9ja Markets',
+      name: 'FOREKAST',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://9jamarkets.com/icon.svg',
+        url: 'https://forekast.io/mobile-logo.png',
       },
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://9jamarkets.com/market/${id}`,
+      '@id': `https://forekast.io/market/${id}`,
     },
     aggregateRating: {
       '@type': 'AggregateRating',
@@ -139,13 +139,13 @@ export default function MarketDetail() {
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://9jamarkets.com',
+        item: 'https://forekast.io',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: question.title,
-        item: `https://9jamarkets.com/market/${id}`,
+        item: `https://forekast.io/market/${id}`,
       },
     ],
   };
@@ -165,7 +165,7 @@ export default function MarketDetail() {
   };
 
   const getShareUrl = () => {
-    return typeof window !== 'undefined' ? window.location.href : `https://9jamarkets.com/market/${id}`;
+    return typeof window !== 'undefined' ? window.location.href : `https://forekast.io/market/${id}`;
   };
 
   const shareToTwitter = () => {
@@ -219,7 +219,7 @@ export default function MarketDetail() {
       />
 
       <Head>
-        <title>{question.title} | Political Prediction Market - 9ja Markets</title>
+        <title>{question.title} | Prediction Market - FOREKAST</title>
         <meta name="description" content={`${question.description.substring(0, 155)}...`} />
         <meta property="og:title" content={question.title} />
         <meta property="og:description" content={question.description} />

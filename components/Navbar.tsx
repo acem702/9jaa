@@ -59,9 +59,6 @@ export default function Navbar() {
             <Link href="/" className="flex items-center group">
               <Logo size="md" />
             </Link>
-            <Link href="/" className="hidden sm:block group">
-              <span className="text-xl font-extrabold text-slate-950 group-hover:text-violet-600 transition-colors duration-200 tracking-tight">9ja Markets</span>
-            </Link>
           </div>
             
           {/* Desktop Navigation */}
@@ -147,7 +144,7 @@ export default function Navbar() {
                     ) : (
                       <div className="px-4 py-3 border-b border-slate-100 space-y-2">
                         <Link href="/register" onClick={() => setMenuOpen(false)} className="block w-full text-center py-2.5 bg-gradient-to-r from-violet-600 to-purple-600 text-white rounded-xl font-bold shadow-lg shadow-violet-500/20 hover:shadow-violet-500/30 transition-all text-sm">
-                          Join 9ja Markets
+                          Join FOREKAST
                         </Link>
                         <Link href="/login" onClick={() => setMenuOpen(false)} className="block w-full text-center py-2.5 bg-slate-50 text-slate-700 rounded-xl font-bold hover:bg-slate-100 transition-all text-sm border border-slate-200">
                           Sign In

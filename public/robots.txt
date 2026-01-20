@@ -6,4 +6,4 @@ Allow: /
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://9jamarkets.com/sitemap.xml
+Sitemap: https://forekast.io/sitemap.xml

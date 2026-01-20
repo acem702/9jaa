@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import Logo from '@/components/Logo';
 
 export default function Login() {
   const { login } = useAuth();
@@ -31,8 +32,8 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-[#f1f5f9] flex">
       <Head>
-        <title>Sign In - 9ja Markets</title>
-        <meta name="description" content="Sign in to express your opinions on political predictions and markets" />
+        <title>Sign In - FOREKAST</title>
+        <meta name="description" content="Sign in to express your opinions on prediction markets" />
       </Head>
 
       {/* Left Side - Branding */}
@@ -43,13 +44,10 @@ export default function Login() {
         </div>
         <div className="relative z-10 max-w-md">
           <div className="flex items-center gap-3 mb-6">
-            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-            </svg>
-            <h1 className="text-5xl font-extrabold text-white tracking-tight">9ja Markets</h1>
+            <Logo size="lg" />
           </div>
           <p className="text-xl text-violet-100 font-semibold mb-8 leading-relaxed">
-            Express your opinions on political outcomes and compete with others
+            Express your opinions on market outcomes and compete with others
           </p>
           <div className="space-y-4">
             <div className="flex items-start gap-3">
@@ -96,12 +94,7 @@ export default function Login() {
           <div className="mb-8">
             <Link href="/">
               <div className="flex items-center gap-3 mb-2">
-                <svg className="w-10 h-10 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-                </svg>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-slate-950 hover:text-violet-600 transition-colors cursor-pointer tracking-tight">
-                  9ja Markets
-                </h2>
+                <Logo size="md" />
               </div>
             </Link>
             <p className="text-base text-slate-600 font-medium leading-relaxed">Welcome back! Sign in to continue</p>

@@ -5,6 +5,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import LoadingSpinner from '@/components/ui/LoadingSpinner';
+import Logo from '@/components/Logo';
 
 export default function Register() {
   const { register } = useAuth();
@@ -45,8 +46,8 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-[#f1f5f9] flex">
       <Head>
-        <title>Sign Up - 9ja Markets</title>
-        <meta name="description" content="Create your account and start expressing opinions on political predictions" />
+        <title>Sign Up - FOREKAST</title>
+        <meta name="description" content="Create your account and start expressing opinions on prediction markets" />
       </Head>
 
       {/* Left Side - Branding */}
@@ -57,10 +58,7 @@ export default function Register() {
         </div>
         <div className="relative z-10 max-w-md">
           <div className="flex items-center gap-3 mb-6">
-            <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-            </svg>
-            <h1 className="text-5xl font-black text-white">Join 9ja Markets</h1>
+            <Logo size="lg" />
           </div>
           <p className="text-xl text-emerald-100 font-semibold mb-8">
             Start with 1,000 free credits and begin your prediction journey
@@ -110,12 +108,7 @@ export default function Register() {
           <div className="mb-8">
             <Link href="/">
               <div className="flex items-center gap-3 mb-2">
-                <svg className="w-10 h-10 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                </svg>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-slate-950 hover:text-emerald-600 transition-colors cursor-pointer tracking-tight">
-                  9ja Markets
-                </h2>
+                <Logo size="md" />
               </div>
             </Link>
             <p className="text-slate-600 font-medium">Create your account in seconds</p>
@@ -320,7 +313,7 @@ export default function Register() {
                     <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                     </svg>
-                    Trade on political outcomes
+                    Trade on global outcomes
                   </li>
                   <li className="flex items-center gap-2">
                     <svg className="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">

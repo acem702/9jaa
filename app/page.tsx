@@ -25,13 +25,13 @@ export default function Home() {
   const structuredData = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: '9ja Markets',
-    alternateName: '9ja Political Prediction Markets',
-    url: 'https://9jamarkets.com',
-    description: 'Express your opinions on Nigerian political outcomes. Trade prediction markets, track your portfolio, and compete on the leaderboard.',
+    name: 'FOREKAST',
+    alternateName: 'Professional Prediction Markets',
+    url: 'https://forekast.io',
+    description: 'Express your opinions on various outcomes. Trade prediction markets, track your portfolio, and compete on the leaderboard.',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://9jamarkets.com/?search={search_term_string}',
+      target: 'https://forekast.io/?search={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   };
@@ -107,12 +107,12 @@ export default function Home() {
 
           {/* Clean Headline */}
           <h1 className="text-3xl md:text-4xl font-extrabold text-slate-950 tracking-tight mb-3 leading-tight">
-            Track Public Opinion on Nigerian Politics
+            Track Public Opinion on Global Events
           </h1>
 
           {/* Trustworthy Description */}
           <p className="text-base text-slate-600 font-medium leading-relaxed max-w-2xl mx-auto mb-6">
-            See what Nigerians think about political outcomes. Real sentiment data from engaged citizens.
+            See what the world thinks about future outcomes. Real sentiment data from engaged participants.
           </p>
 
           {/* Trust Indicators - Simple */}
